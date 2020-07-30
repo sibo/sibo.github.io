@@ -178,7 +178,8 @@ a {
 
 /*#grid {background:#323232;} /*originally not defined*/
 
-#item1, #item2, #item3, #item4, #item5, #item6, #item7, #item8, #item9, #item10, #item11, #item12, #item13, #item14, #item15 {
+/*#item1, #item2, #item3, #item4, #item5, #item6, #item7, #item8, #item9, #item10, #item11, #item12, #item13, #item14, #item15 {*/
+div[id^='item']{
   overflow: hidden;
   z-index: 999;
   display: block;
