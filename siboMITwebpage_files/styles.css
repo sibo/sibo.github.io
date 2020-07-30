@@ -2,60 +2,60 @@
 
 @font-face {
     font-family: 'poppinsbold';
-    src: url('/web/20181204160023im_/http://sibo.mit.edu/fonts/poppins-bold-webfont.eot');
-    src: url('/web/20181204160023im_/http://sibo.mit.edu/fonts/poppins-bold-webfont.eot#iefix') format('embedded-opentype'),
-         url('/web/20181204160023im_/http://sibo.mit.edu/fonts/poppins-bold-webfont.woff2') format('woff2'),
-         url('/web/20181204160023im_/http://sibo.mit.edu/fonts/poppins-bold-webfont.woff') format('woff'),
-         url('/web/20181204160023im_/http://sibo.mit.edu/fonts/poppins-bold-webfont.ttf') format('truetype'),
-         url('/web/20181204160023im_/http://sibo.mit.edu/fonts/poppins-bold-webfont.svg#poppinsbold') format('svg');
+    src: url('fonts/poppins-bold-webfont.eot');
+    src: url('fonts/poppins-bold-webfont.eot#iefix') format('embedded-opentype'),
+         url('fonts/poppins-bold-webfont.woff2') format('woff2'),
+         url('fonts/poppins-bold-webfont.woff') format('woff'),
+         url('fonts/poppins-bold-webfont.ttf') format('truetype'),
+         url('fonts/poppins-bold-webfont.svg#poppinsbold') format('svg');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'poppinslight';
-    src: url('/web/20181204160023im_/http://sibo.mit.edu/fonts/poppins-light-webfont.eot');
-    src: url('/web/20181204160023im_/http://sibo.mit.edu/fonts/poppins-light-webfont.eot#iefix') format('embedded-opentype'),
-         url('/web/20181204160023im_/http://sibo.mit.edu/fonts/poppins-light-webfont.woff2') format('woff2'),
-         url('/web/20181204160023im_/http://sibo.mit.edu/fonts/poppins-light-webfont.woff') format('woff'),
-         url('/web/20181204160023im_/http://sibo.mit.edu/fonts/poppins-light-webfont.ttf') format('truetype'),
-         url('/web/20181204160023im_/http://sibo.mit.edu/fonts/poppins-light-webfont.svg#poppinslight') format('svg');
+    src: url('fonts/poppins-light-webfont.eot');
+    src: url('fonts/poppins-light-webfont.eot#iefix') format('embedded-opentype'),
+         url('fonts/poppins-light-webfont.woff2') format('woff2'),
+         url('fonts/poppins-light-webfont.woff') format('woff'),
+         url('fonts/poppins-light-webfont.ttf') format('truetype'),
+         url('fonts/poppins-light-webfont.svg#poppinslight') format('svg');
     font-weight: 100;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'poppinsmedium';
-    src: url('/web/20181204160023im_/http://sibo.mit.edu/fonts/poppins-medium-webfont.eot');
-    src: url('/web/20181204160023im_/http://sibo.mit.edu/fonts/poppins-medium-webfont.eot#iefix') format('embedded-opentype'),
-         url('/web/20181204160023im_/http://sibo.mit.edu/fonts/poppins-medium-webfont.woff2') format('woff2'),
-         url('/web/20181204160023im_/http://sibo.mit.edu/fonts/poppins-medium-webfont.woff') format('woff'),
-         url('/web/20181204160023im_/http://sibo.mit.edu/fonts/poppins-medium-webfont.ttf') format('truetype'),
-         url('/web/20181204160023im_/http://sibo.mit.edu/fonts/poppins-medium-webfont.svg#poppinsmedium') format('svg');
+    src: url('fonts/poppins-medium-webfont.eot');
+    src: url('fonts/poppins-medium-webfont.eot#iefix') format('embedded-opentype'),
+         url('fonts/poppins-medium-webfont.woff2') format('woff2'),
+         url('fonts/poppins-medium-webfont.woff') format('woff'),
+         url('fonts/poppins-medium-webfont.ttf') format('truetype'),
+         url('fonts/poppins-medium-webfont.svg#poppinsmedium') format('svg');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'poppinsregular';
-    src: url('/web/20181204160023im_/http://sibo.mit.edu/fonts/poppins-regular-webfont.eot');
-    src: url('/web/20181204160023im_/http://sibo.mit.edu/fonts/poppins-regular-webfont.eot#iefix') format('embedded-opentype'),
-         url('/web/20181204160023im_/http://sibo.mit.edu/fonts/poppins-regular-webfont.woff2') format('woff2'),
-         url('/web/20181204160023im_/http://sibo.mit.edu/fonts/poppins-regular-webfont.woff') format('woff'),
-         url('/web/20181204160023im_/http://sibo.mit.edu/fonts/poppins-regular-webfont.ttf') format('truetype'),
-         url('/web/20181204160023im_/http://sibo.mit.edu/fonts/poppins-regular-webfont.svg#poppinsregular') format('svg');
+    src: url('fonts/poppins-regular-webfont.eot');
+    src: url('fonts/poppins-regular-webfont.eot#iefix') format('embedded-opentype'),
+         url('fonts/poppins-regular-webfont.woff2') format('woff2'),
+         url('fonts/poppins-regular-webfont.woff') format('woff'),
+         url('fonts/poppins-regular-webfont.ttf') format('truetype'),
+         url('fonts/poppins-regular-webfont.svg#poppinsregular') format('svg');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'poppinssemibold';
-    src: url('/web/20181204160023im_/http://sibo.mit.edu/fonts/poppins-semibold-webfont.eot');
-    src: url('/web/20181204160023im_/http://sibo.mit.edu/fonts/poppins-semibold-webfont.eot#iefix') format('embedded-opentype'),
-         url('/web/20181204160023im_/http://sibo.mit.edu/fonts/poppins-semibold-webfont.woff2') format('woff2'),
-         url('/web/20181204160023im_/http://sibo.mit.edu/fonts/poppins-semibold-webfont.woff') format('woff'),
-         url('/web/20181204160023im_/http://sibo.mit.edu/fonts/poppins-semibold-webfont.ttf') format('truetype'),
-         url('/web/20181204160023im_/http://sibo.mit.edu/fonts/poppins-semibold-webfont.svg#poppinssemibold') format('svg');
+    src: url('fonts/poppins-semibold-webfont.eot');
+    src: url('fonts/poppins-semibold-webfont.eot#iefix') format('embedded-opentype'),
+         url('fonts/poppins-semibold-webfont.woff2') format('woff2'),
+         url('fonts/poppins-semibold-webfont.woff') format('woff'),
+         url('fonts/poppins-semibold-webfont.ttf') format('truetype'),
+         url('fonts/poppins-semibold-webfont.svg#poppinssemibold') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -196,8 +196,9 @@ div[id^='item']{
   transition: transform 0.6s linear 0s, height 0s linear 0.6s;
 }
 
-#item1:target, #item2:target, #item3:target, #item4:target, #item5:target, #item6:target, #item7:target, #item8:target, 
-#item9:target, #item10:target, #item11:target, #item12:target, #item13:target, #item14:target, #item15:target {
+/*#item1:target, #item2:target, #item3:target, #item4:target, #item5:target, #item6:target, #item7:target, #item8:target, 
+#item9:target, #item10:target, #item11:target, #item12:target, #item13:target, #item14:target, #item15:target {*/
+div[id^'item']:target{
   height: 100%;
   overflow: auto;
   -o-transition: transform 0.6s linear 0s, height 0s linear 0s; 
