@@ -1,10 +1,42 @@
 Commands for editing molecules:
 defining, deleting bonds https://chemapps.stolaf.edu/jmol/docs/#connect
-translateGroup along bond
+
+###translateGroup along bond
+#set d according to slider
+d=10
+btype=getProperty("bondInfo[1].type", {selected}[1] {selected}[2])
+v={selected}[1].xyz - {selected}[2].xyz
+w=v/v *d
+connect {selected}[1] {selected}[2] delete
+frag = {selected}[2].molecule
+translateSelected @w {molecule=frag}
+#reset connectivity
+connect {selected}[1] {selected}[2]
+#select connectivity
+
+
 rotateGroup along Bond
 change angle?? (orient selected atoms to be perp to viewing angle, "axes CENTER {atom2}", then rotate about z axis)
   https://sourceforge.net/p/jmol/mailman/message/13234615/
-calculate double bonds for phenyl rings?
+
+###calculate double bonds for phenyl rings?
+a = {_C}.length;
+for (i from [1,a]) {
+	if ({_C}[i].valence == 3){
+		b = {connected({_C}[i]) and _C};
+		for (j from [1,b.length]) {
+			if (b[j].valence == 3) {
+				d = {_C}[i].xyz.distance({b}[j].xyz);
+				if (d < 1.48 and d > 1.37) {
+					connect {b}[j] {_C}[i] aromaticsingle;
+				}
+			}
+		}
+	}
+}
+reset aromatic
+calculate aromatic
+
 minimize
 show MMFF94 energy
 
