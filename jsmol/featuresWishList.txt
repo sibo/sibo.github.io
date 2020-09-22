@@ -34,6 +34,7 @@ for (i from [1,a]) {
 		}
 	}
 }
+reset aromatic
 calculate aromatic
 
 minimize
