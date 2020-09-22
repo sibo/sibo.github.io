@@ -121,15 +121,15 @@ $(document).ready(function(){
 			+ "    " + Jmol.jmolLink(jmol,"set picking ident", "off")
 			: "")
 			+ Jmol.jmolLink(jmol,"
-a = {_C}.length
+a = {_C}.length;
 for (i from [1,a]) {
 	if ({_C}[i].valence == 3){
-		b = {connected({_C}[i]) and _C}
+		b = {connected({_C}[i]) and _C};
 		for (j from [1,b.length]) {
 			if (b[j].valence == 3) {
-				d = {_C}[i].xyz.distance({b}[j].xyz)
+				d = {_C}[i].xyz.distance({b}[j].xyz);
 				if (d < 1.48 and d > 1.37) {
-					connect {b}[j] {_C}[i] aromaticsingle
+					connect {b}[j] {_C}[i] aromaticsingle;
 				}
 			}
 		}
