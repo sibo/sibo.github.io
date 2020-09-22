@@ -1,6 +1,17 @@
 Commands for editing molecules:
 defining, deleting bonds https://chemapps.stolaf.edu/jmol/docs/#connect
+
 translateGroup along bond
+#set d according to slider
+d=10
+v={selected}[1].xyz - {selected}[2].xyz
+w=v/v *d
+connect {selected}[1] {selected}[2] delete
+frag = {selected}[2].molecule
+translateSelected @w {molecule=frag}
+#select connectivity
+
+
 rotateGroup along Bond
 change angle?? (orient selected atoms to be perp to viewing angle, "axes CENTER {atom2}", then rotate about z axis)
   https://sourceforge.net/p/jmol/mailman/message/13234615/
