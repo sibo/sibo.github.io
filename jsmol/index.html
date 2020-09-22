@@ -79,8 +79,7 @@ var Info = {
 // The actual applet will be jmol._applet (if it turns out to be an actual Applet),
 // but we will never access that directly.
 
-var fixPhenyls = 
-"a = {_C}.length;
+var fixPhenyls = `a = {_C}.length;
 for (i from [1,a]) {
 	if ({_C}[i].valence == 3){
 		b = {connected({_C}[i]) and _C};
@@ -95,7 +94,7 @@ for (i from [1,a]) {
 	}
 }
 reset aromatic;
-calculate aromatic;"
+calculate aromatic;`
 	
 $(document).ready(function(){	
 		
