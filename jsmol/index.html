@@ -120,6 +120,7 @@ $(document).ready(function(){
 			+ Jmol.jmolLink(jmol,"set picking dragMinimize", "on")  
 			+ "    " + Jmol.jmolLink(jmol,"set picking ident", "off")
 			: "")
+			
 			+ Jmol.jmolLink(jmol,"
 a = {_C}.length;
 for (i from [1,a]) {
@@ -135,7 +136,8 @@ for (i from [1,a]) {
 		}
 	}
 }
-", "calculate aromatics")			
+", "calculate aromatics")	
+		     
 			+ "<br>Model Kit Mode "
 			+ Jmol.jmolLink(jmol,"set modelkitmode", "on")
 			+ "    "
