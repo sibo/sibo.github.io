@@ -79,6 +79,24 @@ var Info = {
 // The actual applet will be jmol._applet (if it turns out to be an actual Applet),
 // but we will never access that directly.
 
+var fixPhenyls = 
+"a = {_C}.length;
+for (i from [1,a]) {
+	if ({_C}[i].valence == 3){
+		b = {connected({_C}[i]) and _C};
+		for (j from [1,b.length]) {
+			if (b[j].valence == 3) {
+				d = {_C}[i].xyz.distance({b}[j].xyz);
+				if (d < 1.48 and d > 1.37) {
+					connect {b}[j] {_C}[i] aromaticsingle;
+				}
+			}
+		}
+	}
+}
+reset aromatic;
+calculate aromatic;"
+	
 $(document).ready(function(){	
 		
 	// This demonstration shows that
@@ -120,8 +138,9 @@ $(document).ready(function(){
 			+ Jmol.jmolLink(jmol,"set picking dragMinimize", "on")  
 			+ "    " + Jmol.jmolLink(jmol,"set picking ident", "off")
 			: "")
-			
+			+ "<br>"
 			+ Jmol.jmolLink(jmol,"a = {_C}.length;for (i from [1,a]) {if ({_C}[i].valence == 3){ b = {connected({_C}[i]) and _C};for (j from [1,b.length]) { if (b[j].valence == 3) { d = {_C}[i].xyz.distance({b}[j].xyz); if (d < 1.48 and d > 1.37) { connect {b}[j] {_C}[i] aromaticsingle;}}}}}", "calculate aromatics")	
+			+ Jmol.jmolLink(jmol,fixPhenyls, "calculate aromatics")	
 		     
 			+ "<br>Model Kit Mode "
 			+ Jmol.jmolLink(jmol,"set modelkitmode", "on")
