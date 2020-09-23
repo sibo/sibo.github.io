@@ -243,12 +243,17 @@ $(document).ready(function(){
 </table>
 <div id="console"></div>
 <div id="editor">
-    
+
+<button type="button" id="startEdit">Edit Bond/Angle/Dihedral</button>
 <input id="inputValue" type="text" value="some text">
 <p></p>
 <button type="button" id="enterValue">Enter Value</button>
 
 <script>
+    $("#startEdit").click(function() {
+        var str=$("#inputValue").val();
+        $("p").text(str);
+    });
     $("#enterValue").click(function() {
         var str=$("#inputValue").val();
         $("p").text(str);
