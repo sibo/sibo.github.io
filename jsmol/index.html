@@ -243,14 +243,16 @@ $(document).ready(function(){
 </table>
 <div id="console"></div>
 <div id="editor">
-<input type="text" value="some text">
-<p></p>
     
+<input id="inputValue" type="text" value="some text">
+<p></p>
+<button type="button" id="enterValue">Enter Value</button>
+
 <script>
-    $( "input" ).keyup(function() {
-        var value=$(this).val();
-        $("p").text(value);
-    }).keyup();
+    $("#enterValue").click(function() {
+        var str=$("#inputValue").val();
+        $("p").text(str);
+    });
 </script>
 </div>
 </body>
