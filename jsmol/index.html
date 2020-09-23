@@ -6,7 +6,8 @@
 
 	
 <style>
-    #enterEdit {visibility:hidden;background:yellow;}
+    #atomSet {background:green;}
+    #enterEdit {background:yellow;}
 </style>
 <script type="text/javascript" src="JSmol.min.js"></script>
 
@@ -194,30 +195,13 @@ $(document).ready(function(){
 		+ "<br><br>"
 		+ Jmol.jmolButton(jmol,"select *;if ($s1) {isosurface s1 delete} else {calculate partialcharge;isosurface s1 vdw map MEP translucent}","show/hide MEP")
 		+ "<br><br>"
-		+ (isApplet ?
-// no longer works		Jmol.jmolButton(jmol,"show NMR","Predict NMR")
-//		+ "<br><br>"
-		Jmol.jmolButton(jmol,"write FILE ?","Save FILE")
-		+ "<br>"
-		+ Jmol.jmolButton(jmol,"write PNGJ jsmol.png","Save PNG")
-		+ "<br><br><a href=simple2.htm?_USE=HTML5>HTML5 version</a>"
-		+ "<br><br><a href=simple2.htm?_USE=SIGNED>(Signed) Java version</a>"
-		+ "<br><br>" + Jmol.jmolLink(jmol, "JSCONSOLE", "show info")
-		: 
-		"<br><br>"
-		+ Jmol.jmolButton(jmol,"write FILE ?","Save FILE")
-		+ "<br>"
-		+ Jmol.jmolButton(jmol,"write PNGJ jsmol.png","Save PNG")
-		+ "<br><br><a href=simple2.htm?_USE=SIGNED>JAVA version</a>"
-    + "<br><br><a href=javascript:Jmol.showInfo(jmol,true)>show info</a>"
-        + "<br><br>"
+        + "<br>asdfasf<br>"
         + Jmol.jmolButton(jmol,editor,"Edit bond/angle/dihedral")
-        + "<div id="atomSet">atomSet</div>"
-        + "<div id="editEnter">"
+        + "<div id='atomSet'>atomSet</div>"
+        + "<div id='editEnter'>asdfsadf"
         + Jmol.jmolButton(jmol,editor,"Enter Edit")
         + "</div>"
         + "<br><br>"
-    )
 	);
 	
 	// lower panel:
