@@ -5,7 +5,9 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 	
-	
+<style>
+    #enterEdit {visibility:hidden;background:yellow;}
+</style>
 <script type="text/javascript" src="JSmol.min.js"></script>
 
 <script type="text/javascript">
@@ -100,8 +102,8 @@ calculate aromatic;`
 
 var editor = `select none;
 set selectionHalos on;
-$("#atomSet").text(str)
-$("#editEnter")
+$("#atomSet").text(str);
+$("#editEnter").css("visibility","visible");
 `
 
 $(document).ready(function(){	
@@ -211,6 +213,9 @@ $(document).ready(function(){
         + "<br><br>"
         + Jmol.jmolButton(jmol,editor,"Edit bond/angle/dihedral")
         + "<div id="atomSet">atomSet</div>"
+        + "<div id="editEnter">"
+        + Jmol.jmolButton(jmol,editor,"Enter Edit")
+        + "</div>"
         + "<br><br>"
     )
 	);
@@ -253,11 +258,12 @@ $(document).ready(function(){
 </table>
 <div id="console"></div>
 <div id="editor">
-
+<!--
 <button type="button" id="startEdit">Edit Bond/Angle/Dihedral</button>
 <input id="inputValue" type="text" value="some text">
 <p></p>
 <button type="button" id="enterValue">Enter Value</button>
+
 
 <script>
     $("#startEdit").click(function() {
@@ -269,6 +275,7 @@ $(document).ready(function(){
         $("p").text(str);
     });
 </script>
+-->
 </div>
 </body>
 </html>
