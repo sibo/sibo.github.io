@@ -97,7 +97,13 @@ for (i from [1,a]) {
 }
 reset aromatic;
 calculate aromatic;`
-	
+
+var editor = `select none;
+set selectionHalos on;
+$("#atomSet").text(str)
+$("#editEnter")
+`
+
 $(document).ready(function(){	
 		
 	// This demonstration shows that
@@ -202,6 +208,10 @@ $(document).ready(function(){
 		+ Jmol.jmolButton(jmol,"write PNGJ jsmol.png","Save PNG")
 		+ "<br><br><a href=simple2.htm?_USE=SIGNED>JAVA version</a>"
     + "<br><br><a href=javascript:Jmol.showInfo(jmol,true)>show info</a>"
+        + "<br><br>"
+        + Jmol.jmolButton(jmol,editor,"Edit bond/angle/dihedral")
+        + "<div id="atomSet"></div>"
+        + "<br><br>"
     )
 	);
 	
