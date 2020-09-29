@@ -17,6 +17,12 @@ connect {selected}[1] {selected}[2]
 #rotate group along bond
 rotateSelected {selected}[2] {selected}[3] theta
 
+#change bond angle
+plane1 = plane({selected}[1], {selected}[2], 1)
+plane2 = plane({selected}[3], {selected}[2], 1)
+normalLine = intersection(plane1, plane2)
+rotateSelected {
+
 
 change angle?? (orient selected atoms to be perp to viewing angle, "axes CENTER {atom2}", then rotate about z axis)
   https://sourceforge.net/p/jmol/mailman/message/13234615/
