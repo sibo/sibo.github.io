@@ -14,8 +14,10 @@ translateSelected @w {molecule=frag}
 connect {selected}[1] {selected}[2]
 #select connectivity
 
+#rotate group along bond
+rotateSelected {selected}[2] {selected}[3] theta
 
-rotateGroup along Bond
+
 change angle?? (orient selected atoms to be perp to viewing angle, "axes CENTER {atom2}", then rotate about z axis)
   https://sourceforge.net/p/jmol/mailman/message/13234615/
 
