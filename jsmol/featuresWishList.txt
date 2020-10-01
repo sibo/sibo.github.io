@@ -18,6 +18,16 @@ connect {selected}[1] {selected}[2]
 rotateSelected {selected}[2] {selected}[3] theta
 
 #change bond angle
+#get theta from slider
+theta=90
+draw plane1 {selected}[1], {selected}[2], {selected}[3]
+draw line1 PERP $plane1
+a=[line1.x, line1.y, line1.z]
+draw line2 PERP $plane1 offset {@a[1] @a[2] @a[3]}
+#select atoms attached to selected3
+rotateSelected $line2 theta
+
+
 plane1 = plane({selected}[1], {selected}[2], 1)
 plane2 = plane({selected}[3], {selected}[2], 1)
 normalLine = intersection(plane1, plane2)
