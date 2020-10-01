@@ -2,7 +2,7 @@ Commands for editing molecules:
 defining, deleting bonds https://chemapps.stolaf.edu/jmol/docs/#connect
 
 ###translateGroup along bond
-#set d according to slider
+#set d according to slider (http://biomodel.uah.es/en/model1/prot/hidrofobo.htm )
 d=10
 btype=getProperty("bondInfo[1].type", {selected}[1] {selected}[2])
 v={selected}[1].xyz - {selected}[2].xyz
@@ -18,7 +18,7 @@ connect {selected}[1] {selected}[2]
 rotateSelected {selected}[2] {selected}[3] theta
 
 #change bond angle
-#get theta from slider
+#get theta from slider (http://biomodel.uah.es/en/model1/prot/hidrofobo.htm)
 theta=90
 draw plane1 {selected}[1], {selected}[2], {selected}[3]
 draw line1 PERP $plane1
