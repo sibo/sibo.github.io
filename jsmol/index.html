@@ -188,6 +188,8 @@ $(document).ready(function(){
 		: "")
  		+ (isApplet ?
 		"<br>"
+		+ Jmol.jmolButton(jmol,"write COORD ?.xyz","save XYZ")
+		+ "<br>"
 		+ Jmol.jmolButton(jmol,"load ? ","Load URL")
 		+ "<br>"
 		+ Jmol.jmolButton(jmol,"load ? ","Load FILE")
