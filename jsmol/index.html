@@ -5,10 +5,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 	
-<style>
-    #atomSet {background:green;}
-    #enterEdit {background:yellow;visibility:hidden;}
-</style>
+
 <script type="text/javascript" src="JSmol.min.js"></script>
 
 <script type="text/javascript">
@@ -199,10 +196,9 @@ $(document).ready(function(){
 		+ "<br><br>"
 		+ Jmol.jmolButton(jmol,"select *;if ($s1) {isosurface s1 delete} else {calculate partialcharge;isosurface s1 vdw map MEP translucent}","show/hide MEP")
 		+ "<br><br>"
-        + "<br>asdfasf<br>"
         + Jmol.jmolButton(jmol,editor,"Edit bond/angle/dihedral")
-        + "<div id='atomSet'>atomSet</div>"
-        + "<div id='editEnter'>asdfsadf"
+        + "<div id='atomSet'>Atoms selected: <span>none</span></div>"
+        + "<div id='editEnter'>"
         + Jmol.jmolButton(jmol,editor,"Enter Edit")
         + "</div>"
         + "<br><br>"
