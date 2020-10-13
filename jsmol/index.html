@@ -102,7 +102,9 @@ var editor = `select none;
 set picking select atom
 select {_C}[1];
 set selectionHalos on;
-$("#atomSet").text(Jmol.evaluateVar(jmol,"{selected}.length"));
+#$("#atomSet").text(Jmol.evaluateVar(jmol,"{selected}.length"));
+$("#atomSet").text("testing");
+
 $("#editEnter").css("visibility","visible");
 $("#editEnter").text(Jmol.evaluateVar(jmol,"{selected}.length"));
 `
