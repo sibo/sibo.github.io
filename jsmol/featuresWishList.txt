@@ -1,6 +1,8 @@
 Commands for editing molecules:
 defining, deleting bonds https://chemapps.stolaf.edu/jmol/docs/#connect
 
+#duplicate Selected Atoms (and translate 50 Ang +x direction)
+
 ###translateGroup along bond
 #set d according to slider (http://biomodel.uah.es/en/model1/prot/hidrofobo.htm )
 d=10
