@@ -110,7 +110,9 @@ $("#editEnter").text(Jmol.evaluateVar(jmol,"{selected}.length"));
 `
 
 function testFunction(){
-  alert("JMol selection:" + Jmol.evaluateVar(jmol,"script('print {selected}')"));
+  x = Jmol.evaluateVar(jmol,"script('print {selected}')")
+  alert("JMol selection:" + x);
+  $("#editEnter").text(x);
 }
 
 $(document).ready(function(){	
