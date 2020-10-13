@@ -1,6 +1,7 @@
 Commands for editing molecules:
 defining, deleting bonds https://chemapps.stolaf.edu/jmol/docs/#connect
 
+#actual undo function
 #duplicate Selected Atoms (and translate 50 Ang +x direction)
 
 ###translateGroup along bond
