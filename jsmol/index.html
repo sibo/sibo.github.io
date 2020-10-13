@@ -100,7 +100,7 @@ calculate aromatic;`
 
 var editor = `select none;
 set picking select atom
-#select {_C}[1];
+select {_C}[1];
 set selectionHalos on;
 $("#atomSet").text(Jmol.evaluateVar(jmol,"{selected}.length"));
 $("#editEnter").css("visibility","visible");
