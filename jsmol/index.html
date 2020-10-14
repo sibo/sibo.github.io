@@ -100,7 +100,7 @@ calculate aromatic;`
 
 var editor = `select none;
 set picking select atom
-select {_C}[1];
+#select {_C}[1];
 set selectionHalos on;
 #$("#atomSet").text(Jmol.evaluateVar(jmol,"{selected}.length"));
 $("#atomSet").text( "testing" );
@@ -115,10 +115,15 @@ function testFunction(){
   $("#atomSet").text(x);
 }
 
-$("jmol").click(function() {
-	alert("clicked on jmol");
+$("#middlepanel").click(function() {
+	alert("clicked on middle");
 });
 
+	
+$("body").click(function() {
+	alert("clicked on body");
+});
+	
 $(document).ready(function(){	
 		
 	// This demonstration shows that
