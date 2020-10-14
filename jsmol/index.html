@@ -118,11 +118,6 @@ function testFunction(){
 $("#middlepanel").click(function() {
 	alert("clicked on middle");
 });
-
-	
-$("body").click(function() {
-	alert("clicked on body");
-});
 	
 $(document).ready(function(){	
 		
@@ -150,6 +145,13 @@ $(document).ready(function(){
   //   jmolApplet0 = "jmolApplet0"
   //
 
+	
+	
+$("#middlepanel").click(function() {
+	x = Jmol.evaluateVar(jmol,"script('print {selected}')");
+	$("#atomSet").text(x);
+});
+	
 	var use = (Info.use != "JAVA" ? Info.use : Info.isSigned ? "SIGNED" : "JAVA");  
   var radios = [
 		["set background white", "white", true],
