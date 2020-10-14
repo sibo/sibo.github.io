@@ -112,8 +112,12 @@ $("#editEnter").text(Jmol.evaluateVar(jmol,"{selected}.length"));
 function testFunction(){
   x = Jmol.evaluateVar(jmol,"script('print {selected}')")
   alert("JMol selection:" + x);
-  $("#editEnter").text(x);
+  $("#atomSet").text(x);
 }
+
+$("jmol").click(function() {
+	alert("clicked on jmol");
+});
 
 $(document).ready(function(){	
 		
