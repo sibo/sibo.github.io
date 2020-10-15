@@ -126,7 +126,9 @@ function picked () {
 	
 function measured() {
   //$("#atomSet").text(arguments[1]);
-  var numAtoms = arguments[1].length - 1;
+  input = arguments[1].substring(1,arguments[1].length-1); // remove leading and trailing [ and ]
+  input = input.split(",")
+  var numAtoms = input.length - 1;
   if (numAtoms == 2) {
 	  var type = "bond";
   } else if (numAtoms == 3) {
@@ -138,10 +140,10 @@ function measured() {
   var data = '<tr>';
   for (i = 0; i < numAtoms; i++) {
 	  header += "<td>Atom " + i + "</td>";
-	  data += "<td>" + arguments[1][i] + "</td>";
+	  data += "<td>" + input[i] + "</td>";
   }
   header += "<td>current " + type + "</td><td>new " + type + "</td><td></td></tr>";
-  data += "<td>" + arguments[1][numAtoms] + "</td><td>-submit button-</td></tr>";
+  data += "<td>" + input[numAtoms] + "</td><td>-submit button-</td></tr>";
   $("#atomSet").text("<table>" + header + data + "</table>");
 }
 
