@@ -57,8 +57,7 @@ var Info = {
 	console: "jmol_infodiv",
 	disableInitialConsole: true,
 	defaultModel: null,
-	debug: false,
-	pickCallback="myPick"
+	debug: false
 }
 
 	// this next bit just allows us to see what platform we are on
@@ -114,8 +113,9 @@ function testFunction(){
   alert("JMol selection:" + x);
   $("#atomSet").text(x);
 }
-	
-function myPick() {
+
+Jmol.script(jmol,'set pickCallback = "picked";');
+function picked() {
   alert('you clicked on atom ' + (arguments[2] + 1));
 }
 
