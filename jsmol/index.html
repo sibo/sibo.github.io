@@ -115,12 +115,16 @@ function testFunction(){
   $("#atomSet").text(x);
 }
 
-function picked() {
+function picked () {
   //alert('you clicked on atom ' + (arguments[2] + 1));
   var el = document.createElement('span');
   el.innerHTML = '' + (arguments[2] + 1);
   //$("#atomSet").appendChild(el);
   $("#atomSet").text(arguments[2] + 1);
+}
+	
+function measured() {
+  $("#atomSet").text(arguments[2]);
 }
 
 	
@@ -151,7 +155,7 @@ $(document).ready(function(){
   //
 
 	
-Jmol.script(jmol,'set pickCallback = "picked"; ');	
+Jmol.script(jmol,'set MeasureCallback = "measured"; ');	
 	
 	var use = (Info.use != "JAVA" ? Info.use : Info.isSigned ? "SIGNED" : "JAVA");  
   var radios = [
