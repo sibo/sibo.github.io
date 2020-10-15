@@ -3,8 +3,9 @@
 <head>
 	<title>JSmol -- platform-aware Jmol using jQuery</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-	
+<style>
+	#atomSet{font-family:"Courier New",Courier,monospace;}
+</style>
 
 <script type="text/javascript" src="JSmol.min.js"></script>
 
@@ -124,7 +125,24 @@ function picked () {
 }
 	
 function measured() {
-  $("#atomSet").text(arguments[1]);
+  //$("#atomSet").text(arguments[1]);
+  numAtoms = arguments[1].length - 1;
+  if (numAtoms == 2) {
+	  type = "bond";
+  } else if (numAtoms == 3) {
+	  type = "angle";
+  } else {
+	  type = "dihedral";
+  }
+  header = '<tr>';
+  data = '<tr>';
+  for (i = 0; i < numAtoms; i++) {
+	  header += "<td>Atom " + i + "</td>";
+	  data += "<td>" + arguments[1][i] + "</td>";
+  }
+  header += "<td>current " + type + "</td><td>new " + type + "</td><td></td></tr>";
+  data += "<td>" + arguments[1][numAtoms] + "</td><td>-submit button-</td></tr>";
+  $("atomSet").text("<table>" + header + data + "</table>");
 }
 
 	
@@ -224,7 +242,7 @@ Jmol.script(jmol,'set MeasureCallback = "measured"; ');
 		+ "<br><br>"
 		+ Jmol.jmolButton(jmol,"select *;if ($s1) {isosurface s1 delete} else {calculate partialcharge;isosurface s1 vdw map MEP translucent}","show/hide MEP")
 		+ "<br><br>"
-        + Jmol.jmolButton(jmol,editor,"Edit bond/angle/dihedral")
+        + Jmol.jmolButton(jmol,editor,"Measure/Edit Bond/angle/dihedral")
         + "<div id='atomSet'>Atoms selected: <span>none</span></div>"
         + "<div id='editEnter'>"
         + Jmol.jmolButton(jmol,editor,"Enter Edit")
