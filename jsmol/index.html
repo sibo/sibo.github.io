@@ -109,12 +109,12 @@ $("#editEnter").text(Jmol.evaluateVar(jmol,"{selected}.length"));
 `
 
 function testFunction(){
-  x = Jmol.evaluateVar(jmol,"script('print {selected}')")
+  x = Jmol.evaluateVar(jmol,"script('print {selected}')");
   alert("JMol selection:" + x);
   $("#atomSet").text(x);
 }
 
-Jmol.script(jmol,'set pickCallback = "picked";');
+Jmol.script(jmol,'set pickCallback = "picked" ');
 function picked() {
   alert('you clicked on atom ' + (arguments[2] + 1));
 }
