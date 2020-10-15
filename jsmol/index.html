@@ -115,6 +115,11 @@ function testFunction(){
   $("#atomSet").text(x);
 }
 
+function picked() {
+  //alert('you clicked on atom ' + (arguments[2] + 1));
+  alert("test");
+}
+Jmol.script(jmol,'set pickCallback = "picked"; ');
 	
 $(document).ready(function(){	
 		
