@@ -109,18 +109,6 @@ $("#editEnter").css("visibility","visible");
 $("#editEnter").text(Jmol.evaluateVar(jmol,"{selected}.length"));
 `
 
-function testFunction(){
-  x = Jmol.evaluateVar(jmol,"script('print {selected}')");
-  alert("JMol selection:" + x);
-  $("#atomSet").text(x);
-}
-
-Jmol.script(jmol,'set pickCallback = "picked"; ');
-function picked() {
-  //alert('you clicked on atom ' + (arguments[2] + 1));
-  alert("test");
-}
-
 
 	
 $(document).ready(function(){	
@@ -151,11 +139,6 @@ $(document).ready(function(){
 
 	
 	
-$("#middlepanel").click(function() {
-	x = Jmol.evaluateVar(jmol,"script('print {selected}')");
-	//x = Jmol.scriptEcho(jmol,"script('set picking mode torsion')");
-	$("#atomSet").text(x);
-});
 	
 	var use = (Info.use != "JAVA" ? Info.use : Info.isSigned ? "SIGNED" : "JAVA");  
   var radios = [
