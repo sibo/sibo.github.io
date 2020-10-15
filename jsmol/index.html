@@ -57,7 +57,8 @@ var Info = {
 	console: "jmol_infodiv",
 	disableInitialConsole: true,
 	defaultModel: null,
-	debug: false
+	debug: false,
+	pickCallback="myPick"
 }
 
 	// this next bit just allows us to see what platform we are on
@@ -75,7 +76,6 @@ var Info = {
 
 		Info.defaultModel = "$tylenol";
 		Info.script = "#alt:LOAD :tylenol";
-		Info.pickCallback = "myPick";
 	}
 
 // The actual applet will be jmol._applet (if it turns out to be an actual Applet),
