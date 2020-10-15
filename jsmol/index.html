@@ -126,16 +126,16 @@ function picked () {
 	
 function measured() {
   //$("#atomSet").text(arguments[1]);
-  numAtoms = arguments[1].length - 1;
+  var numAtoms = arguments[1].length - 1;
   if (numAtoms == 2) {
-	  type = "bond";
+	  var type = "bond";
   } else if (numAtoms == 3) {
-	  type = "angle";
+	  var type = "angle";
   } else {
-	  type = "dihedral";
+	  var type = "dihedral";
   }
-  header = '<tr>';
-  data = '<tr>';
+  var header = '<tr>';
+  var data = '<tr>';
   for (i = 0; i < numAtoms; i++) {
 	  header += "<td>Atom " + i + "</td>";
 	  data += "<td>" + arguments[1][i] + "</td>";
