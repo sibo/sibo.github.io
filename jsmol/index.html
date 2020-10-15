@@ -4,7 +4,7 @@
 	<title>JSmol -- platform-aware Jmol using jQuery</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <style>
-	#atomSet table{width:100%;table-layout:fixed}
+	#atomSet table{width:160px;table-layout:fixed}
 </style>
 
 <script type="text/javascript" src="JSmol.min.js"></script>
@@ -139,10 +139,10 @@ function measured() {
   var header = '<tr>';
   var data = '<tr>';
   for (i = 0; i < numAtoms; i++) {
-	  header += "<td>Atom " + i + "</td>";
+	  header += "<td><!--atom " + (i+1) + "--></td>";
 	  data += "<td>" + input[i] + "</td>";
   }
-  header += "<td>current " + type + "</td><td>new " + type + "</td><td></td></tr>";
+  header += "<td>old " + type + "</td><td>new " + type + "</td><td></td></tr>";
   data += "<td>" + input[numAtoms] + "</td><td><input type='text' value='" + input[numAtoms] + "'></td><td><input type='submit' value='set'></td></tr>";
   $("#atomSet").html("<table>" + header + data + "</table>");
 }
