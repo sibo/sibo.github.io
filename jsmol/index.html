@@ -75,7 +75,7 @@ var Info = {
 
 		Info.defaultModel = "$tylenol";
 		Info.script = "#alt:LOAD :tylenol";
-
+		Info.pickCallback = "myPick";
 	}
 
 // The actual applet will be jmol._applet (if it turns out to be an actual Applet),
@@ -115,6 +115,12 @@ function testFunction(){
   $("#atomSet").text(x);
 }
 	
+function myPick() {
+  alert('you clicked on atom ' + (arguments[2] + 1));
+}
+
+
+	
 $(document).ready(function(){	
 		
 	// This demonstration shows that
@@ -144,8 +150,8 @@ $(document).ready(function(){
 	
 	
 $("#middlepanel").click(function() {
-	//x = Jmol.evaluateVar(jmol,"script('print {selected}')");
-	x = Jmol.scriptEcho(jmol,"script('set picking mode torsion')");
+	x = Jmol.evaluateVar(jmol,"script('print {selected}')");
+	//x = Jmol.scriptEcho(jmol,"script('set picking mode torsion')");
 	$("#atomSet").text(x);
 });
 	
