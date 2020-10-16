@@ -172,7 +172,7 @@ function editMolecule(input) {
 		alert("setting " + a + "-" + b + " distance to " + x + " Ang");
         	var s = `v={${a}}.xyz - {${b}}.xyz
 w=v/v *x
-connect {{${a}} {${b}} delete
+connect {${a}} {${b}} delete
 frag = {${b}}.molecule
 print "w = " + w
 translateSelected @w {molecule=@frag}
