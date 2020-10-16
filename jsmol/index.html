@@ -162,8 +162,8 @@ function applyBond(a, b, order) {
 }
 function editMolecule(input) {
 	//if (input.length == 3) { #edit Bond
-	input = input.split(', ');
-	//alert(input);
+	input = input.split(',');
+	alert(input);
 	//alert(input.length);
 	var x = $("#editValue").val();
 	if (input.length == 3) { //edit bond
@@ -176,7 +176,7 @@ connect {@a} {@b} delete
 frag = {@b}.molecule
 translateSelected @w {molecule=frag}
 connect {@a} {@b}`;
-		Jmol.evaluateVar(jmol,"script("+s+")");
+		Jmol.script(jmol,s);
 	}
 }
 	
