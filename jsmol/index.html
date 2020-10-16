@@ -158,7 +158,7 @@ function applyBond(a, b, order) {
 	a=a.split(' ')[0];
 	b=b.split(' ')[0];
 	alert("setting " + a + "-" + b + " bond order to " + order);
-	Jmol.evaluateVar(jmol,"script('connect {a} {b} {order};')");
+	Jmol.evaluateVar(jmol,"script('connect {@a} {@b} {@order};')");
 }
 function editMolecule(input) {
 	//if (input.length == 3) { #edit Bond
