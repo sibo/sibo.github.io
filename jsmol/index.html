@@ -128,7 +128,7 @@ function picked () {
 function measured() {
   //$("#atomSet").text(arguments[1]);
   input = arguments[1].substring(1,arguments[1].length-1); // remove leading and trailing [ and ]
-  input = input.split(",");
+  input = input.split(", ");
   var numAtoms = input.length - 1;
   if (numAtoms == 2) {
 	  var type = "bond";
