@@ -155,8 +155,8 @@ function measured() {
   $("#atomSet").html("<b>Edit " + type + ":</b><table>" + header + data + "</table>");
 }
 function applyBond(a, b, order) {
-	a=a.split(', ')[0];
-	b=b.split(', ')[0];
+	a=a.split(' ')[0];
+	b=b.split(' ')[0];
 	alert("setting " + a + "-" + b + " bond order to " + order);
 	Jmol.evaluateVar(jmol,"script('connect {a} {b} {order};')");
 }
