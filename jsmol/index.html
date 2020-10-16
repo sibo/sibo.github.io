@@ -160,24 +160,22 @@ function applyBond(a, b, order) {
 function editMolecule(input) {
 	//if (input.length == 3) { #edit Bond
 	input = input.split(', ');
-	alert(input);
-	alert(input.length);
+	//alert(input);
+	//alert(input.length);
 	var x = $("#editValue").val();
 	if (input.length == 3) { //edit bond
 		a = input[0].split(' ')[0];
 		b = input[1].split(' ')[0];
-		alert(a);
-		alert(b);
-	}
-        var s = `v={selected}[1].xyz - {selected}[2].xyz
+		//alert(a);
+		//alert(b);
+        var s = `v={@a}.xyz - {@b}.xyz
 w=v/v *d
-connect {selected}[1] {selected}[2] delete
-frag = {selected}[2].molecule
+connect {@a} {@b} delete
+frag = {@b}.molecule
 translateSelected @w {molecule=frag}
-#reset connectivity
-connect {selected}[1] {selected}[2]`
-
-
+connect {@a} {@b}`;
+		Jmol.evaluateVar(jmol,"script("+s+")");
+	}
 }
 	
 $(document).ready(function(){	
