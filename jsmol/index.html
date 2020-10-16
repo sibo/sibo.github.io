@@ -161,10 +161,7 @@ function applyBond(a, b, order) {
 	Jmol.script(jmol,"connect {" + a + "} {" + b + "} " + order + ";");
 }
 function editMolecule(input) {
-	//if (input.length == 3) { #edit Bond
 	input = input.split(',');
-	//alert(input);
-	//alert(input.length);
 	var x = $("#editValue").val();
 	if (input.length == 3) { //edit bond
 		a = input[0].split(' ')[0];
@@ -186,6 +183,19 @@ translateSelected @w {molecule=@frag}`;
 			Jmol.script(jmol,s2);
 		}
 		Jmol.script(jmol,`connect {${a}} {${b}}`);
+	} else if (input.length == 4) { // edit angle
+	} else { // edit dihedral
+		b = input[1].split(' ');
+		c = input[1].split(' ');
+		Jmol.script(jmol,"connect {" + b + "} {" + c + "} delete;");
+		bFrag = Jmol.evaluateVar(jmol,"script('print {" + b + "}.molecule')");
+		cFrag = Jmol.evaluateVar(jmol,"script('print {" + c + "}.molecule')");
+		if (cFrag == bFrag) {
+			alert("Cannot set dependent dihedral");
+		} else {
+			Jmol.script(jmol,"rotateSelected {" + b + "} {" + c + "} " + x + "{molecule=" + cFrag + };");
+		}
+		Jmol.script(jmol,`connect {${b}} {${c}}`);
 	}
 }
 	
