@@ -154,8 +154,9 @@ function measured() {
   $("#atomSet").html("<b>Edit " + type + ":</b><table>" + header + data + "</table>");
 }
 function applyBond(a, b, order) {
-	alert(a);
-	alert(b);
+	a=a.split(', ')[0];
+	b=b.split(', ')[0];
+	Jmol.evaluateVar(jmol,"script(connect {@a} {@b} {@order};)");
 }
 function editMolecule(input) {
 	//if (input.length == 3) { #edit Bond
@@ -169,7 +170,7 @@ function editMolecule(input) {
 		//alert(a);
 		//alert(b);
         var s = `v={@a}.xyz - {@b}.xyz
-w=v/v *d
+w=v/v *x
 connect {@a} {@b} delete
 frag = {@b}.molecule
 translateSelected @w {molecule=frag}
