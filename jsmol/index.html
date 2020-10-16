@@ -191,14 +191,15 @@ translateSelected @w {molecule=@frag}`;
 		bFrag = Jmol.evaluateVar(jmol,"script('print {" + b + "}.molecule')");
 		cFrag = Jmol.evaluateVar(jmol,"script('print {" + c + "}.molecule')");
 		var s = `
-draw plane1 {selected}[1], {selected}[2], {selected}[3]
+draw plane1 {${a}}, {${b}}, {${c}}
 draw line1 PERP $plane1
 a=[line1.x, line1.y, line1.z]
 draw line2 PERP $plane1 offset {@a[1] @a[2] @a[3]}
-rotateSelected $line2 theta`
+rotateSelected $line2 ${x}`
 		if (cFrag == bFrag) {
 			alert("Cannot set dependent angle");
 		} else {
+			alert(s);
 			Jmol.script(jmol,s);
 		}
 		Jmol.script(jmol,`connect {${b}} {${c}}`);
