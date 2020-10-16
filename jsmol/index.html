@@ -151,7 +151,21 @@ function measured() {
 function editMolecule(input) {
 	//if (input.length == 3) { #edit Bond
 	var x = $("#editValue").val();
-	alert(x);
+	if (input.length == 3) { //edit bond
+		a = input[0].split(' ')[0];
+		b = input[1].split(' ')[0];
+		alert(a);
+		alert(b);
+	}
+        var s = `v={selected}[1].xyz - {selected}[2].xyz
+w=v/v *d
+connect {selected}[1] {selected}[2] delete
+frag = {selected}[2].molecule
+translateSelected @w {molecule=frag}
+#reset connectivity
+connect {selected}[1] {selected}[2]`
+
+
 }
 	
 $(document).ready(function(){	
