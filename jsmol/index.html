@@ -185,8 +185,8 @@ translateSelected @w {molecule=@frag}`;
 		Jmol.script(jmol,`connect {${a}} {${b}}`);
 	} else if (input.length == 4) { // edit angle
 	} else { // edit dihedral
-		b = input[1].split(' ');
-		c = input[2].split(' ');
+		b = input[1].split(' ')[0];
+		c = input[2].split(' ')[0];
 		Jmol.script(jmol,"connect {" + b + "} {" + c + "} delete;");
 		bFrag = Jmol.evaluateVar(jmol,"script('print {" + b + "}.molecule')");
 		cFrag = Jmol.evaluateVar(jmol,"script('print {" + c + "}.molecule')");
