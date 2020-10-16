@@ -171,7 +171,7 @@ function editMolecule(input) {
 		b = input[1].split(' ')[0];
 		alert("setting " + a + "-" + b + " distance to " + x + " Ang");
         	var s = `v={${a}}.xyz - {${b}}.xyz
-w=v/v *x
+w=v/v * ${x}
 connect {${a}} {${b}} delete
 frag = {${b}}.molecule
 print "w = " + w
