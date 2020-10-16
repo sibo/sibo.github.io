@@ -153,7 +153,10 @@ function measured() {
   }
   $("#atomSet").html("<b>Edit " + type + ":</b><table>" + header + data + "</table>");
 }
-
+function applyBond(a, b, order) {
+	alert(a);
+	alert(b);
+}
 function editMolecule(input) {
 	//if (input.length == 3) { #edit Bond
 	input = input.split(', ');
