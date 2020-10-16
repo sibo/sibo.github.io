@@ -174,7 +174,8 @@ function editMolecule(input) {
 w=v/v *x
 connect {{${a}} {${b}} delete
 frag = {${b}}.molecule
-translateSelected @w {molecule=frag}
+print "w = " + w
+translateSelected @w {molecule=@frag}
 connect {${a}} {${b}}`;
 		alert(s);
 		Jmol.script(jmol,s);
