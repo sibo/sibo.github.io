@@ -142,9 +142,9 @@ function measured() {
 	  header += "<td><!--atom " + (i+1) + "--></td>";
 	  data += "<td>" + input[i] + "</td>";
   }
-  header += "<td>old " + type + "</td><td>new " + type + "</td><td></td></tr>";
+  header += "<td>old</td><td>new</td><td></td></tr>";
   data += "<td>" + input[numAtoms] + "</td><td><input type='text' value='" + input[numAtoms] + "'></td><td><input type='submit' value='set'></td></tr>";
-  $("#atomSet").html("<table>" + header + data + "</table>");
+  $("#atomSet").html("<b>" + type + "</b><table>" + header + data + "</table>");
 }
 
 	
