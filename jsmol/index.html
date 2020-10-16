@@ -146,10 +146,10 @@ function measured() {
   header += "<!--<td>old</td>--><td>new</td><td></td></tr>";
   data += "<!--<td>" + input[numAtoms] + "</td>--><td><input type='text' id='editValue' value='' size=4></td><td><button type='button' onclick='editMolecule(\"" + input + "\")'>></button></td></tr>";
   if (type=="bond") {
-    data += "<tr><td><button type='button' onclick='applyBond(" + input[0] + "," + input[1] + ",1)'>-</button></td>";
-    data += "<td><button type='button' onclick='applyBond(" + input[0] + "," + input[1] + ",-1.5)'>≃</button></td>";
-    data += "<td><button type='button' onclick='applyBond(" + input[0] + "," + input[1] + ",2)'>=</button></td>";
-    data += "<td><button type='button' onclick='applyBond(" + input[0] + "," + input[1] + ",3)'>≡</button></td></tr>";
+    data += "<tr><td><button type='button' onclick='applyBond(\"" + input[0] + "\",\"" + input[1] + "\",1)'>-</button></td>";
+    data += "<td><button type='button' onclick='applyBond(\"" + input[0] + "\",\"" + input[1] + "\",-1.5)'>≃</button></td>";
+    data += "<td><button type='button' onclick='applyBond(\"" + input[0] + "\",\"" + input[1] + "\",2)'>=</button></td>";
+    data += "<td><button type='button' onclick='applyBond(\"" + input[0] + "\",\"" + input[1] + "\",3)'>3</button></td></tr>";
   }
   $("#atomSet").html("<b>Edit " + type + ":</b><table>" + header + data + "</table>");
 }
