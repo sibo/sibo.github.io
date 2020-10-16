@@ -170,13 +170,13 @@ function editMolecule(input) {
 		a = input[0].split(' ')[0];
 		b = input[1].split(' ')[0];
 		alert("setting " + a + "-" + b + " distance to " + x + " Ang");
-        var s = `v={${a}}.xyz - {${b}}.xyz
+        	var s = `v={${a}}.xyz - {${b}}.xyz
 w=v/v *x
 connect {{${a}} {${b}} delete
 frag = {${b}}.molecule
 translateSelected @w {molecule=frag}
 connect {${a}} {${b}}`;
-		Jmol.script(jmol,s);
+		Jmol.script(jmol,`${s}`);
 	}
 }
 	
