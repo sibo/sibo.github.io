@@ -157,26 +157,35 @@ function measured() {
 function applyBond(a, b, order) {
 	a=a.split(' ')[0];
 	b=b.split(' ')[0];
-	alert("setting " + a + "-" + b + " bond order to " + order);
+	//alert("setting " + a + "-" + b + " bond order to " + order);
 	Jmol.script(jmol,"connect {" + a + "} {" + b + "} " + order + ";");
 }
 function editMolecule(input) {
 	//if (input.length == 3) { #edit Bond
-	input = input.split(', ');
+	input = input.split(',');
 	//alert(input);
 	//alert(input.length);
 	var x = $("#editValue").val();
 	if (input.length == 3) { //edit bond
 		a = input[0].split(' ')[0];
 		b = input[1].split(' ')[0];
-		alert("setting " + a + "-" + b + " distance to " + x + " Ang");
-        var s = `v={@a}.xyz - {@b}.xyz
-w=v/v *x
-connect {@a} {@b} delete
-frag = {@b}.molecule
-translateSelected @w {molecule=frag}
-connect {@a} {@b}`;
-		Jmol.evaluateVar(jmol,"script("+s+")");
+		//alert("setting " + a + "-" + b + " distance to " + x + " Ang");
+        	var s1 = `
+connect {${a}} {${b}} delete
+frag = {${b}}.molecule`;
+		var s2 = `
+v={${b}}.xyz - {${a}}.xyz
+w=v/v * ${x} - v
+translateSelected @w {molecule=@frag}`;
+		Jmol.script(jmol,s1);
+		aFrag = Jmol.evaluateVar(jmol,"script('print {" + a + "}.molecule')");
+		bFrag = Jmol.evaluateVar(jmol,"script('print {" + b + "}.molecule')");
+		if (aFrag == bFrag) {
+			alert("Cannot set dependent distance");
+		} else {
+			Jmol.script(jmol,s2);
+		}
+		Jmol.script(jmol,`connect {${a}} {${b}}`);
 	}
 }
 	
