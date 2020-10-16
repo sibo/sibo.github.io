@@ -193,7 +193,7 @@ translateSelected @w {molecule=@frag}`;
 		if (cFrag == bFrag) {
 			alert("Cannot set dependent dihedral");
 		} else {
-			Jmol.script(jmol,"rotateSelected {" + b + "} {" + c + "} " + x + "{molecule=" + cFrag + };");
+			Jmol.script(jmol,"rotateSelected {" + b + "} {" + c + "} " + x + "{molecule=" + cFrag + "};");
 		}
 		Jmol.script(jmol,`connect {${b}} {${c}}`);
 	}
