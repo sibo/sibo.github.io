@@ -223,6 +223,11 @@ rotateSelected $line2 ${theta} {molecule=${cFrag}}`;
 		}
 		Jmol.script(jmol,`connect {${b}} {${c}}`);
 	}
+	s = "";
+	for (i = 0 ; i < input.length ; i++) {
+		s += "{" + input[i].split(' ')[0] + "} ";
+	}
+	Jmol.script(jmol,"measure " + s);
 }
 	
 $(document).ready(function(){	
