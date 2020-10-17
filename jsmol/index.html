@@ -230,7 +230,7 @@ draw off`;
 		s += "{" + input[i].split(' ')[0] + "} ";
 	}
 	//alert("measure " + s);
-	//Jmol.evaluateVar(jmol,"script('measure " + s + "')");
+	Jmol.script(jmol,"measure " + s);
 }
 	
 $(document).ready(function(){	
