@@ -199,7 +199,8 @@ a={${b}}.x-$line1.x
 b={${b}}.y-$line1.y
 c={${b}}.z-$line1.z
 draw line2 PERP $plane1 offset {@a @b @c}
-rotateSelected $line2 ${theta} {molecule=${cFrag}}`;
+select {molecule=${cfrag}}
+rotateSelected $line2 ${theta}`;
 		if (cFrag == bFrag) {
 			alert("Cannot set dependent angle");
 		} else {
