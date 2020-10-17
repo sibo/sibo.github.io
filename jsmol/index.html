@@ -180,6 +180,7 @@ translateSelected @w {molecule=@frag}`;
 		if (aFrag == bFrag) {
 			alert("Cannot set dependent distance");
 		} else {
+			alert(s2);
 			Jmol.script(jmol,s2);
 		}
 		Jmol.script(jmol,`connect {${a}} {${b}}`);
