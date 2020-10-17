@@ -227,6 +227,7 @@ rotateSelected $line2 ${theta} {molecule=${cFrag}}`;
 	for (i = 0 ; i < input.length ; i++) {
 		s += "{" + input[i].split(' ')[0] + "} ";
 	}
+	alert("measure " + s);
 	Jmol.script(jmol,"measure " + s);
 }
 	
