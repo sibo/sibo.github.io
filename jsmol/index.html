@@ -195,11 +195,11 @@ translateSelected @w {molecule=@frag}`;
 		var s = `
 draw plane1 {${a}}, {${b}}, {${c}}
 draw line1 PERP $plane1
-a=$line1.x
-b=$line1.y
-c=$line1.z
+a=-$line1.x
+b=-$line1.y
+c=-$line1.z
 draw line2 PERP $plane1 offset {@a @b @c}
-rotateSelected $line2 ${theta} {molecule=${cFrag}}`
+rotateSelected $line2 ${theta} {molecule=${cFrag}}`;
 		if (cFrag == bFrag) {
 			alert("Cannot set dependent angle");
 		} else {
