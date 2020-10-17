@@ -214,7 +214,8 @@ draw off`;
 		b = input[1].split(' ')[0];
 		c = input[2].split(' ')[0];
 		d = input[3].split(' ')[0];
-		omega = x - input[4].split(' ')[0];
+		old = Jmol.evaluateVar(jmol,"script(`measure {${a}} {${b}} {${c}} {${d}}`)");
+		omega = x - old;
 		Jmol.script(jmol,"connect {" + b + "} {" + c + "} delete;");
 		bFrag = Jmol.evaluateVar(jmol,"script('print {" + b + "}.molecule')");
 		cFrag = Jmol.evaluateVar(jmol,"script('print {" + c + "}.molecule')");
@@ -229,8 +230,8 @@ draw off`;
 	for (i = 0 ; i < input.length - 1 ; i++) {
 		s += "{" + input[i].split(' ')[0] + "} ";
 	}
-	alert("measure " + s);
-	Jmol.evaluateVar(jmol,"script('measure " + s + "')");
+	//alert("measure " + s);
+	//Jmol.evaluateVar(jmol,"script('measure " + s + "')");
 }
 	
 $(document).ready(function(){	
