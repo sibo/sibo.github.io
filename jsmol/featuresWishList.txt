@@ -1,5 +1,13 @@
 Commands for editing molecules:
-defining, deleting bonds https://chemapps.stolaf.edu/jmol/docs/#connect
+
+#assign atoms: set modelkitmode = True; set picking assignAtom_Cr
+
+#JSME editor
+
+
+#defining, deleting bonds https://chemapps.stolaf.edu/jmol/docs/#connect
+
+
 
 #actual undo function ("undoMove" and "redoMove")
 #duplicate Selected Atoms (and translate 50 Ang +x direction)
