@@ -246,8 +246,6 @@ var JMEInfo = {
   ,options : "autoez;nocanonize"
   //,"jme" : startingStructure   
 }
-
-var jme = Jmol.getJMEApplet(jme, JMEInfo, jmol);
 	
 // arrow button actions -- "to2D" has been removed
 
@@ -284,7 +282,7 @@ $(document).ready(function(){
   //
   //   jmolApplet0 = "jmolApplet0"
   //
-
+  var jme = Jmol.getJMEApplet(jme, JMEInfo, jmol);
 	
 Jmol.script(jmol,'set MeasureCallback = "measured"; ');	
 	
