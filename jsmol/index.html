@@ -9,6 +9,8 @@
 </style>
 
 <script type="text/javascript" src="JSmol.min.js"></script>
+<script type="text/javascript" src="js/JSmolJME.js"></script>
+<script type="text/javascript" language="javascript" src="jsme/jsme/jsme.nocache.js"></script>
 
 <script type="text/javascript">
 
@@ -232,6 +234,27 @@ draw off`;
 	//alert("measure " + s);
 	Jmol.script(jmol,"measure " + s);
 }
+
+	
+// set up JSME
+
+var JMEInfo = {     
+	use: "HTML5"
+  ,visible: true
+  ,divId: "jmediv"
+  ,options : "autoez;nocanonize"
+  //,"jme" : startingStructure   
+}
+	
+// arrow button actions -- "to2D" has been removed
+
+var from2D = false;
+function to3D() {
+  from2D = true;
+  Jmol.show2d(jmol, false)
+  showSmiles(false)
+  from2D = false;
+}
 	
 $(document).ready(function(){	
 		
@@ -362,6 +385,8 @@ Jmol.script(jmol,'set MeasureCallback = "measured"; ');
 </script>
 </head>
 <body>
+<div id="jmediv" style="position:relative;width:400px;height:300px;"></div>
+<input type="button" onclick="to3D()" value="&#8594" />
 <table style="margin-left:auto; margin-right:auto;">
 	<tr>
 		<td><div id="leftpanel"></div></td>
