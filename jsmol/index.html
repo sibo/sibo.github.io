@@ -62,7 +62,19 @@ var Info = {
 	console: "jmol_infodiv",
 	disableInitialConsole: true,
 	defaultModel: null,
-	debug: false
+	debug: false,
+	loadstructcallback: "loadStructCallback" //this is for JSME functionality
+}
+
+// called from JSmol when a model is loaded or cleared
+
+var loadStructCallback = function(app,filename) {
+   if (!filename)
+    return;
+   setFormat();
+   if (!from2D)
+    to2D();
+   showSmiles(true)
 }
 
 	// this next bit just allows us to see what platform we are on
