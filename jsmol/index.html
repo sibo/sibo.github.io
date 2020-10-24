@@ -149,13 +149,18 @@ $(document).ready(function() {
 
 <div id="tabs">
   <ul id="menu">
-    <li><a href="#1D">1D</a></li>
+    <li><a href="#1D" onclick="showSmiles(true)">1D</a></li>
     <li><a href="#2D" onclick="">2D</a></li>
     <li><a href="#3D" id="startTab">3D</a></li>
     <li><a href="#about">about</a></li>
   </ul>
   <div id="1D">1d stuff
   <a target=_blank href=http://opensmiles.org/>1D (SMILES)</a>: <span id="jsmolsmiles"></span>
+  	<script>
+	  $(document).ready(function(){
+		  Jmol.jmolButton(jmol,"if (!molname) { molname = 'tylenol'};var x = prompt('Enter the name or identifier (SMILES, InChI, CAS) of a molecule',molname);if (!x) { quit }; molname = x; load @{'$' + molname} #alt:LOAD $??Enter a model name","Load from NCI")
+	  });
+	</script>
   </div>
   <div id="2D">
     <div id="jmediv" style="position:relative;width:400px;height:300px;"></div>
@@ -175,7 +180,7 @@ $(document).ready(function() {
   <div>
     <script>
       Jmol.jmolButton(jmol,"load ? ","Load FILE")
-      Jmol.jmolButton(jmol,"if (!molname) { molname = 'tylenol'};var x = prompt('Enter the name or identifier (SMILES, InChI, CAS) of a molecule',molname);if (!x) { quit }; molname = x; load @{'$' + molname} #alt:LOAD $??Enter a model name","Load MOL (NCI)")
+      Jmol.jmolButton(jmol,"if (!molname) { molname = 'tylenol'};var x = prompt('Enter the name or identifier (SMILES, InChI, CAS) of a molecule',molname);if (!x) { quit }; molname = x; load @{'$' + molname} #alt:LOAD $??Enter a model name","Load from NCI")
       Jmol.jmolButton(jmol,"write COORD ?.xyz","save XYZ")
       Jmol.jmolButton(jmol,"write COORD ?.mol","MOL")
       Jmol.jmolButton(jmol,"write COORD ?.pdb","PDB")
