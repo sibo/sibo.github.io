@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hack-a-Mol</title>
+<meta charset="utf-8" />
+<script type="text/javascript" src="JSmol.min.js"></script>
+<script type="text/javascript" src="JSmolJME.js"></script>
+<script type="text/javascript" language="javascript" src="jsme/jsme/jsme.nocache.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+<script type="text/javascript">
+
+
+
+// load JSmol from the textarea 
+
+function loadMol() {
+  var s = $("#strucfile").val();
+  // check for 2D or 3D data:
+  var pt = s.indexOf("\n") + 21
+  if (s.indexOf("V2000") >= 0 && s.substring(pt, pt+2) == "2D") {
+    Jmol.jmeReadMolecule(jme, s)
+  } else {
+    s = "load data 'mydata'" + s + "\nend 'mydata'"
+    setTimeout(function() {Jmol.script(jmol, s)}, 10);
+  }
+}
+
+//Jmol._debugCode = true;//(s.indexOf("debugcode") >= 0);
+
+var jmol="jmol";
+var jme = "jme";
+
+// set up Jmol
+
+var JmolInfo = {
+	width: 700,
+	height: 700,
+	debug: false,
+	color: "white",
+	use: "HTML5",
+  addSelectionOptions: false,
+	serverURL: "https://chemapps.stolaf.edu/jmol/jsmol/php/jsmol.php",
+  disableJ2SLoadMonitor: true,
+  disableInitialConsole: true,
+  loadstructcallback: "loadStructCallback",
+  jarPath: "java",
+	jarFile: "JmolAppletSigned.jar",
+  j2sPath: "j2s",
+	isSigned: true,
+  defaultModel: "$caffeine",
+	script: "frank off;select none;selectionHalos on;",
+}
+
+// called from JSmol when a model is loaded or cleared
+
+var loadStructCallback = function(app,filename) {
+   if (!filename)
+    return;
+   setFormat();
+   if (!from2D)
+    to2D();
+   showSmiles(true)
+}
+
+// specify drop-down options for [search]
+
+Jmol.setGrabberOptions([["$", "NCI"], [":", "PubChem"]])
+
+
+// set up JSME
+
+var JMEInfo = {     
+	use: "HTML5"
+  ,visible: true
+  ,divId: "jmediv"
+  ,options : "autoez;nocanonize"
+  //,"jme" : startingStructure   
+}
+
+// arrow button actions -- "to2D" has been removed
+
+var from2D = false;
+function to3D() {
+  from2D = true;
+  Jmol.show2d(jmol, false)
+  showSmiles(false)
+  from2D = false;
+  $("#tabs").tabs("option","active",2);
+  $("#jmol_appletinfotablediv").focus();
+  $("#jmol_appletdiv").focus();
+  $("#jmol_canvas2d").focus();
+  $("#jmol_2dcanvasdiv").focus();
+  $("#jmol_infotablediv").focus();
+}
+
+function to2D() {
+  from2D = false;
+  Jmol.show2d(jmol, true);
+}
+
+// links for SMILES, InChI, and InChIKey
+
+function google(query) {
+ return "<a title='google this' target=_blank href=\"https://www.google.com/search?q=" + encodeURIComponent('"' + query + '"') + "\">" + query + "</a>";
+}
+
+function ebiMatch(smiles) {
+ return "<a title='search ChEMBL' target=_blank href=\"https://www.ebi.ac.uk/chembl/api/data/molecule?molecule_structures__canonical_smiles__flexmatch=" 
+  + encodeURIComponent(smiles) + "\">" + smiles + "</a> &nbsp;&nbsp;at <a target=_blank href=https://www.ebi.ac.uk/chembl/api/data>ChEMBL</a>";
+}
+
+// show the SMILES, InChI, and InChIKey
+        
+function showSmiles(from3d) {
+ setTimeout(function() {
+  var smiles = Jmol.evaluateVar(jmol, "{visible}.find('SMILES/noaromatic')")
+  $("#jsmolsmiles").html(ebiMatch(smiles));
+  var inchi = Jmol.evaluateVar(jmol, "show('chemical stdinchi')").trim();
+  xxxi = inchi  
+  $("#jsmolinchi").html(google(inchi.split("=")[1]));
+  var inchikey = Jmol.evaluateVar(jmol, "show('chemical stdinchikey')").trim();
+  $("#jsmolinchikey").html(google(inchikey.split("=")[1]));
+
+ });
+  //$("#jsmesmiles").html(jme._getSmiles());
+}
+
+$(document).ready(function() {
+  $( "#accordion" ).accordion();
+  $( "#tabs" ).tabs({active:1});
+  setTimeout(function(){ $("#startTab" ).click()}, 1000);
+} );
+
+
+</script>
+
+</head>
+
+<style>
+#jsmolWrapper{float:left;display:inline;}
+#accordion{float:left;width:300px;}
+#accordion div a{padding:2px;}
+#accordion div a:hover{background-color:#ddd;}
+#accordion div a:focus{background-color:lightblue;}
+</style>
+
+<body>
+
+<div id="tabs">
+  <ul id="menu">
+    <li><a href="#1D">1D</a></li>
+    <li><a href="#2D" onclick="">2D</a></li>
+    <li><a href="#3D" id="startTab">3D</a></li>
+    <li><a href="#about">about</a></li>
+  </ul>
+  <div id="1D">1d stuff
+  <a target=_blank href=http://opensmiles.org/>1D (SMILES)</a>: <span id="jsmolsmiles"></span>
+  </div>
+  <div id="2D">
+    <div id="jmediv" style="position:relative;width:400px;height:300px;"></div>
+    <input type="button" onclick="to3D()" value="2D &#8594 3D" />
+    <input type="button" onclick="to2D()" value="3D &#8594 2D" />
+  </div>
+  <div id="3D">
+    <div id="jsmolWrapper">
+    <script>
+      jmol = Jmol.getApplet(jmol, JmolInfo)
+      jme = Jmol.getJMEApplet(jme, JMEInfo, jmol);
+    </script>
+    </div>
+    
+<div id="accordion">
+  <h3>Import/Export</h3>
+  <div>
+    <script>
+      Jmol.jmolButton(jmol,"load ? ","Load FILE")
+      Jmol.jmolButton(jmol,"if (!molname) { molname = 'tylenol'};var x = prompt('Enter the name or identifier (SMILES, InChI, CAS) of a molecule',molname);if (!x) { quit }; molname = x; load @{'$' + molname} #alt:LOAD $??Enter a model name","Load MOL (NCI)")
+      Jmol.jmolButton(jmol,"write COORD ?.xyz","save XYZ")
+      Jmol.jmolButton(jmol,"write COORD ?.mol","MOL")
+      Jmol.jmolButton(jmol,"write COORD ?.pdb","PDB")
+      Jmol.jmolButton(jmol,"write ","export PNG")
+      Jmol.jmolButton(jmol,"capture 'spin.gif' SPIN y","spin (aGIF)")
+      Jmol.jmolButton(jmol,"capture 'rock.gif' ROCK","rock (aGIF)")
+    </script>
+  </div>
+  <h3>View</h3>
+  <div>
+    style: 
+    <script>
+      Jmol.jmolLink(jmol,"wireframe -0.1", "wireframe")
+      Jmol.jmolLink(jmol,"spacefill only;spacefill 23%;wireframe 0.15", "ball&stick")
+      Jmol.jmolLink(jmol,"spacefill", "spacefill")
+     </script>
+     background:
+    <script>
+      Jmol.jmolLink(jmol,"set backgroundcolor='white'", "white")
+      Jmol.jmolLink(jmol,"set backgroundcolor='#ddd'", "gray")
+      Jmol.jmolLink(jmol,"set backgroundcolor='black'", "black")
+     </script>
+     <script>
+           Jmol.jmolLink(jmol,"centerAt boundbox 0 0 0", "re-center")
+           Jmol.jmolLink(jmol,"select all;label %a;select none;", "labels ON")
+           Jmol.jmolLink(jmol,"select all;label off;select none;", "labels OFF")           
+           Jmol.jmolLink(jmol,"set showHydrogens true", "H ON")
+           Jmol.jmolLink(jmol,"set showHydrogens false", "H OFF")
+     </script>
+    color:
+    <script>   
+      Jmol.jmolLink(jmol,"color {all} cpk", "element")
+      Jmol.jmolLink(jmol,"color {all} molecule", "molecule")
+      Jmol.jmolLink(jmol,"select all;mydata={all}.atomIndex.all;data 'property_1 @mydata';propertyColorScheme='rainbow';color atoms property_1;select none;", "rainbow")
+     </script>
+          
+    <!-- <script>
+      Jmol.jmolButton(jmol,"wireframe -0.1 #alt:SETTING Line", "wireframe")
+      Jmol.jmolButton(jmol,"spacefill only;spacefill 23%;wireframe 0.15 #alt:SETTING Ball and Stick","ball&stick");
+      Jmol.jmolButton(jmol,"spacefill #alt:SETTING van der Waals Spheres", "spacefill");	
+    </script> -->
+  </div>
+  <h3>Build</h3>
+  <div>
+  Most model building will be easier to do in the 2D tab!
+    Atoms (click = change, or click+drag = add):
+    <script>
+      Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignAtom_C", "C")
+      Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignAtom_H", "O")
+      Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignAtom_O", "O")
+      Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignAtom_N", "N")
+      Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignAtom_P", "P")
+      Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignAtom_S", "S")
+      Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignAtom_F", "F")
+      Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignAtom_Cl", "Cl")
+      Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignAtom_??", "X")
+  </script>
+      Bond (click = change, or click+drag = add):
+    <script>
+      Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignBond_HBOND", "--")
+      Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignBond_SINGLE", "—")
+      Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignBond_PARTIALDOUBLE", "≃")
+      Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignBond_DOUBLE", "=")
+      Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignBond_TRIPLE", "≡")
+
+  </script>
+  </div>
+  <h3>Sculpt</h3>
+  <div>
+  <script>
+      Jmol.jmolLink(jmol,"load", "reload")
+      Jmol.jmolLink(jmol,"undomove", "undo")
+      Jmol.jmolLink(jmol,"redomove", "redo")
+  </script>
+  Select:
+  <script>   
+      Jmol.jmolLink(jmol,"set pickingstyle select none; set picking select atom", "atom")
+      Jmol.jmolLink(jmol,"set pickingstyle select drag; set picking select atom", "box")
+      Jmol.jmolLink(jmol,"select none", "none")
+      Jmol.jmolLink(jmol,"select all", "all")
+      Jmol.jmolLink(jmol,"select {not selected}", "invert")
+     </script>
+  Delete:
+  <script>   
+      Jmol.jmolLink(jmol,"delete selected", "selection")
+      Jmol.jmolLink(jmol,"set picking deleteatom;set picking deletebond; set bondpicking true;", "onClick")
+     </script>
+  Move:
+    <script>   
+      Jmol.jmolLink(jmol,"set picking dragatom", "atom")
+      Jmol.jmolLink(jmol,"set picking dragligand", "molecule")
+     </script>
+     duplicate selected
+     Minimize:
+         <script>   
+      Jmol.jmolLink(jmol,"minimize {selected}", "selected")
+      Jmol.jmolLink(jmol,"minimize","all")
+      Jmol.jmolLink(jmol,"set picking dragminimize","drag+minimize")
+      var fixPhenyls = `a = {_C}.length;
+for (i from [1,a]) {
+	if ({_C}[i].valence == 3){
+		b = {connected({_C}[i]) and _C};
+		for (j from [1,b.length]) {
+			if (b[j].valence == 3) {
+				d = {_C}[i].xyz.distance({b}[j].xyz);
+				if (d < 1.48 and d > 1.37) {
+					connect {b}[j] {_C}[i] aromaticsingle;
+				}
+			}
+		}
+	}
+}
+reset aromatic;
+calculate aromatic;`
+	Jmol.jmolLink(jmol,fixPhenyls, "rebond aromatics")	
+     </script>
+     constrain/fix specific atoms during minimization?
+  </div>
+  <h3>Special</h3>
+  <div>
+  Plot Void Space with different gases
+  </div>
+</div>    
+
+
+
+<div id="lowerPanel" style="clear:both;float:left;">
+<script>
+  Jmol.jmolButton(jmol,"console");
+  Jmol.jmolCommandInput(jmol);
+</script>
+</div>
+
+
+  </div>
+  <div id="about">
+  Powered by JSMol (<a href="https://chemapps.stolaf.edu/jmol/docs/">see documentation</a> for many text-based commands). Inspired by <a href="http://molview.org">molview</a> and <a href="https://arrows.emsl.pnnl.gov/api/">EMSL Arrows</a>.
+  
+  <h3>Potential future features:</h3>
+  <ul>
+    <li>Return xtb output and optimized structure</li>
+    <li>Return NWChem input file for geometry optimization, frequency calculation, single-point calculation</li>
+  </ul>
+  </div>
+</div>
+ 
+<!--
+
+  <div id="left" style="float:left;text-align:center">
+    <div id="jmediv" style="position:relative;width:400px;height:300px;"></div>
+    <input type="button" onclick="to3D()" value="2D &#8594 3D" />
+  </div>
+  <div id="wrapper" style="float:left;">
+  <script>
+    jmol = Jmol.getApplet(jmol, JmolInfo)
+    jme = Jmol.getJMEApplet(jme, JMEInfo, jmol);
+  </script>
+  </div>
+  <div id="io">
+    load nci; load pubchem; load file; save xyz; save pdb; save image; save animations
+  </div>
+  <div id="view">
+    background colors; wireframe, ball&stick, spacefill
+  </div>
+  <div id="editor">undo; redo; calc aromatics; minimize; measure/edit; sculpt (drag+minimize); add CHNOPSFClBrIX; delete atom; delete bond</div>
+  <div id="specialized">plot void space of membrane</div>
+ <div id="smiles" style="clear:left;"><a target=_blank href=http://opensmiles.org/>1D (SMILES)</a>: <span id="jsmolsmiles"></span></div>
+-->
+
+</body>
+</html>
