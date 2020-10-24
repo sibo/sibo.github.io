@@ -130,6 +130,7 @@ $(document).ready(function() {
   $( "#accordion" ).accordion();
   $( "#tabs" ).tabs({active:1});
   setTimeout(function(){ $("#startTab" ).click()}, 2000);
+  $("#1D").append(`<script>Jmol.jmolButton(jmol,"if (!molname) { molname = 'tylenol'};var x = prompt('Enter the name or identifier (SMILES, InChI, CAS) of a molecule',molname);if (!x) { quit }; molname = x; load @{'$' + molname} #alt:LOAD $??Enter a model name","Load from NCI")</script>`);
 } );
 
 
@@ -154,13 +155,8 @@ $(document).ready(function() {
     <li><a href="#3D" id="startTab">3D</a></li>
     <li><a href="#about">about</a></li>
   </ul>
-  <div id="1D">1d stuff
-  <a target=_blank href=http://opensmiles.org/>1D (SMILES)</a>: <span id="jsmolsmiles"></span>
-  	<script>
-	  $(document).ready(function(){
-		  Jmol.jmolButton(jmol,"if (!molname) { molname = 'tylenol'};var x = prompt('Enter the name or identifier (SMILES, InChI, CAS) of a molecule',molname);if (!x) { quit }; molname = x; load @{'$' + molname} #alt:LOAD $??Enter a model name","Load from NCI")
-	  });
-	</script>
+  <div id="1D">
+  <a target=_blank href=http://opensmiles.org/>SMILES</a>: <span id="jsmolsmiles"></span>
   </div>
   <div id="2D">
     <div id="jmediv" style="position:relative;width:400px;height:300px;"></div>
