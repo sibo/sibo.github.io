@@ -100,7 +100,7 @@ function to2D() {
 }
 
 function load1D() {
-	if (!molname) { molname = 'tylenol'};
+	molname = 'tylenol';
 	var x = prompt('Enter the name or identifier (SMILES, InChI, CAS) of a molecule',molname);
 	if (!x) { quit }; 
 	molname = x; 
