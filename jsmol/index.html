@@ -139,6 +139,7 @@ $(document).ready(function() {
   $( "#accordion" ).accordion();
   $( "#tabs" ).tabs({active:1});
   setTimeout(function(){ $("#startTab" ).click()}, 2000);
+  $(document).tooltip();
 } );
 
 
@@ -219,7 +220,7 @@ $(document).ready(function() {
     <script>   
       Jmol.jmolLink(jmol,"color {all} cpk", "element")
       Jmol.jmolLink(jmol,"color {all} molecule", "molecule")
-      Jmol.jmolLink(jmol,"select all;mydata={all}.atomIndex.all;data 'property_1 @mydata';propertyColorScheme='rainbow';color atoms property_1;select none;", "rainbow")
+      Jmol.jmolLink(jmol,"select all;mydata={all}.atomIndex.all;data 'property_1 @mydata';propertyColorScheme='rainbow';color atoms property_1;select none;", "&#127752;","","rainbow")
      </script>
           
     <!-- <script>
@@ -231,10 +232,11 @@ $(document).ready(function() {
   <h3>Build</h3>
   <div>
   Most model building will be easier to do in the 2D tab!
-    Atoms (click = change, or click+drag = add):
+    <div title="click to edit, or click+drag to grow">
+    Atoms:
     <script>
       Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignAtom_C", "C")
-      Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignAtom_H", "O")
+      Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignAtom_H", "H")
       Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignAtom_O", "O")
       Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignAtom_N", "N")
       Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignAtom_P", "P")
@@ -243,30 +245,31 @@ $(document).ready(function() {
       Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignAtom_Cl", "Cl")
       Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignAtom_??", "X")
   </script>
+  </div>
       Bond (click = change, or click+drag = add):
     <script>
-      Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignBond_HBOND", "--")
-      Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignBond_SINGLE", "—")
-      Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignBond_PARTIALDOUBLE", "≃")
-      Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignBond_DOUBLE", "=")
-      Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignBond_TRIPLE", "≡")
+      Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignBond_HBOND", "--","","hydrogen bond")
+      Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignBond_SINGLE", "–","","single bond")
+      Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignBond_PARTIALDOUBLE", "≃","","partial double bond")
+      Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignBond_DOUBLE", "=","","double bond")
+      Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignBond_TRIPLE", "≡","","triple bond")
 
   </script>
   </div>
   <h3>Sculpt</h3>
   <div>
   <script>
-      Jmol.jmolLink(jmol,"load", "reload")
-      Jmol.jmolLink(jmol,"undomove", "undo")
-      Jmol.jmolLink(jmol,"redomove", "redo")
+      Jmol.jmolLink(jmol,"load", "&#x27F2;","reload","reload")
+      Jmol.jmolLink(jmol,"undomove", "&#x21A9;","undo","undoMove")
+      Jmol.jmolLink(jmol,"redomove", "&#x21AA;","redo","redoMove")
   </script>
   Select:
   <script>   
       Jmol.jmolLink(jmol,"set pickingstyle select none; set picking select atom", "atom")
       Jmol.jmolLink(jmol,"set pickingstyle select drag; set picking select atom", "box")
-      Jmol.jmolLink(jmol,"select none", "none")
-      Jmol.jmolLink(jmol,"select all", "all")
-      Jmol.jmolLink(jmol,"select {not selected}", "invert")
+      Jmol.jmolLink(jmol,"select none", "∅","selectnone","select none")
+      Jmol.jmolLink(jmol,"select all", "∀","selectall","select all")
+      Jmol.jmolLink(jmol,"select {not selected}", "∉", "invert","invert selection")
      </script>
   Delete:
   <script>   
