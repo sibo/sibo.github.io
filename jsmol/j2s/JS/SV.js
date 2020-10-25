@@ -1018,6 +1018,10 @@ function (x1, x2) {
 if (x1 == null || x2 == null) return false;
 if (x1.tok == x2.tok) {
 switch (x1.tok) {
+case 2:
+if (x2.tok == 2) {
+return x1.intValue == x2.intValue;
+}break;
 case 4:
 return (x1.value).equalsIgnoreCase (x2.value);
 case 10:
@@ -1035,7 +1039,10 @@ return (x1.value).equals (x2.value);
 case 12:
 return (x1.value).equals (x2.value);
 }
-}return (Math.abs (JS.SV.fValue (x1) - JS.SV.fValue (x2)) < 0.000001);
+}System.out.println (JS.SV.fValue (x1));
+System.out.println (Math.abs (JS.SV.fValue (x1) - JS.SV.fValue (x2)));
+System.out.println (JS.SV.fValue (x2));
+return (Math.abs (JS.SV.fValue (x1) - JS.SV.fValue (x2)) < 0.000001);
 }, "JS.SV,JS.SV");
 c$.isLike = Clazz.defineMethod (c$, "isLike", 
 function (x1, x2) {
@@ -1359,6 +1366,8 @@ var d = JS.SV.fValue (b);
 return (c < d ? -1 : c > d ? 1 : 0);
 }if (a.tok == 4 || b.tok == 4) return JS.SV.sValue (a).compareTo (JS.SV.sValue (b));
 }switch (a.tok) {
+case 2:
+return (a.intValue < b.intValue ? -1 : a.intValue > b.intValue ? 1 : 0);
 case 4:
 return JS.SV.sValue (a).compareTo (JS.SV.sValue (b));
 case 7:

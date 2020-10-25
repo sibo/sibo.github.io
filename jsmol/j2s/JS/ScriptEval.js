@@ -2281,10 +2281,11 @@ this.setShapeProperty (iShape, "init", null);
 var value = NaN;
 var type = J.atomdata.RadiusData.EnumType.ABSOLUTE;
 var ipt = 1;
+var isOnly = false;
 while (true) {
 switch (this.getToken (ipt).tok) {
 case 1073742072:
-this.restrictSelected (false, false);
+isOnly = true;
 case 1073742335:
 value = 1;
 type = J.atomdata.RadiusData.EnumType.FACTOR;
@@ -2296,6 +2297,9 @@ case 1073741976:
 this.setShapeProperty (iShape, "ignore", this.atomExpressionAt (ipt + 1));
 ipt = this.iToken + 1;
 continue;
+case 3:
+isOnly = (this.tokAt (ipt + 1) == 1073742072 || this.floatParameter (ipt) < 0);
+break;
 case 2:
 var dotsParam = this.intParameter (ipt);
 if (this.tokAt (ipt + 1) == 1665140738) {
@@ -2312,10 +2316,12 @@ return;
 }
 break;
 }
-var rd = (Float.isNaN (value) ? this.encodeRadiusParameter (ipt, false, true) :  new J.atomdata.RadiusData (null, value, type, J.c.VDW.AUTO));
+var rd = (Float.isNaN (value) ? this.encodeRadiusParameter (ipt, isOnly, true) :  new J.atomdata.RadiusData (null, value, type, J.c.VDW.AUTO));
 if (rd == null) return;
 if (Float.isNaN (rd.value)) this.invArg ();
-this.setShapeSize (iShape, rd);
+if (isOnly) {
+this.restrictSelected (false, false);
+}this.setShapeSize (iShape, rd);
 }, "~N");
 Clazz.defineMethod (c$, "cmdEcho", 
  function (index) {
@@ -3731,7 +3737,8 @@ var cameraX = NaN;
 var cameraY = NaN;
 var pymolView = null;
 var q = null;
-switch (this.getToken (i).tok) {
+var tok = this.getToken (i).tok;
+switch (tok) {
 case 1073742110:
 pymolView = this.floatParameterSet (++i, 18, 21);
 i = this.iToken + 1;
@@ -3827,7 +3834,7 @@ axis.set (aa.x, aa.y, aa.z);
 degrees = (isMolecular ? -1 : 1) * (aa.angle * 180.0 / 3.141592653589793);
 }if (Float.isNaN (axis.x) || Float.isNaN (axis.y) || Float.isNaN (axis.z)) axis.set (0, 0, 0);
  else if (axis.length () == 0 && degrees == 0) degrees = NaN;
-isChange = !this.vwr.tm.isInPosition (axis, degrees);
+isChange = (tok == 134221850 || !this.vwr.tm.isInPosition (axis, degrees));
 if (this.isFloatParameter (i)) zoom = this.floatParameter (i++);
 if (this.isFloatParameter (i) && !this.isCenterParameter (i)) {
 xTrans = this.floatParameter (i++);

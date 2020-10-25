@@ -64,9 +64,9 @@
 ){
 var $t$;
 //var c$;
-Jmol.___JmolDate="$Date: 2020-09-06 18:16:32 -0500 (Sun, 06 Sep 2020) $"
+Jmol.___JmolDate="$Date: 2020-10-11 08:17:35 -0500 (Sun, 11 Oct 2020) $"
 Jmol.___fullJmolProperties="src/org/jmol/viewer/Jmol.properties"
-Jmol.___JmolVersion="14.31.4"
+Jmol.___JmolVersion="14.31.12"
 // JSmolJavaExt.js
  
 
@@ -27286,6 +27286,10 @@ function (x1, x2) {
 if (x1 == null || x2 == null) return false;
 if (x1.tok == x2.tok) {
 switch (x1.tok) {
+case 2:
+if (x2.tok == 2) {
+return x1.intValue == x2.intValue;
+}break;
 case 4:
 return (x1.value).equalsIgnoreCase (x2.value);
 case 10:
@@ -27303,7 +27307,10 @@ return (x1.value).equals (x2.value);
 case 12:
 return (x1.value).equals (x2.value);
 }
-}return (Math.abs (JS.SV.fValue (x1) - JS.SV.fValue (x2)) < 0.000001);
+}System.out.println (JS.SV.fValue (x1));
+System.out.println (Math.abs (JS.SV.fValue (x1) - JS.SV.fValue (x2)));
+System.out.println (JS.SV.fValue (x2));
+return (Math.abs (JS.SV.fValue (x1) - JS.SV.fValue (x2)) < 0.000001);
 }, "JS.SV,JS.SV");
 c$.isLike = Clazz_defineMethod (c$, "isLike", 
 function (x1, x2) {
@@ -27627,6 +27634,8 @@ var d = JS.SV.fValue (b);
 return (c < d ? -1 : c > d ? 1 : 0);
 }if (a.tok == 4 || b.tok == 4) return JS.SV.sValue (a).compareTo (JS.SV.sValue (b));
 }switch (a.tok) {
+case 2:
+return (a.intValue < b.intValue ? -1 : a.intValue > b.intValue ? 1 : 0);
 case 4:
 return JS.SV.sValue (a).compareTo (JS.SV.sValue (b));
 case 7:
@@ -29034,8 +29043,9 @@ return n;
 }, "~N,~N");
 Clazz_defineMethod (c$, "setColixAndPalette", 
 function (colix, paletteID, atomIndex) {
-if (this.colixes == null) System.out.println ("ATOMSHAPE ERROR");
-this.colixes[atomIndex] = colix = this.getColixI (colix, paletteID, atomIndex);
+if (this.colixes == null) {
+this.checkColixLength (-1, this.ac);
+}this.colixes[atomIndex] = colix = this.getColixI (colix, paletteID, atomIndex);
 this.bsColixSet.setBitTo (atomIndex, colix != 0 || this.shapeID == 0);
 this.paletteIDs[atomIndex] = paletteID;
 }, "~N,~N,~N");
@@ -31361,6 +31371,7 @@ iValue = Clazz_floatToInt (fValue);
 if (n >= list.length) return;
 sValue = list[n++];
 }var atom = this.at[i];
+var f;
 switch (tok) {
 case 1086326786:
 this.setAtomName (i, sValue, true);
@@ -31419,8 +31430,8 @@ case 1113589786:
 this.setHydrophobicity (i, fValue);
 break;
 case 1128269825:
-if (fValue < 2 && fValue > 0.01) fValue = 100 * fValue;
-this.setOccupancy (i, fValue, true);
+f = (fValue < 2 && fValue >= 0.01 ? 100 * fValue : fValue);
+this.setOccupancy (i, f, true);
 break;
 case 1111492619:
 this.setPartialCharge (i, fValue, true);
@@ -31440,9 +31451,10 @@ this.vwr.shm.setAtomLabel (sValue, i);
 break;
 case 1665140738:
 case 1112152075:
-if (fValue < 0) fValue = 0;
- else if (fValue > 16) fValue = 16.1;
-atom.madAtom = (Clazz_floatToShort (fValue * 2000));
+f = fValue;
+if (f < 0) f = 0;
+ else if (f > 16) f = 16.1;
+atom.madAtom = (Clazz_floatToShort (f * 2000));
 break;
 case 1113589787:
 this.vwr.slm.setSelectedAtom (atom.i, (fValue != 0));

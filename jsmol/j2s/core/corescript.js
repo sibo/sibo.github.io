@@ -295,6 +295,7 @@ return (this.thisFunction != null ? this.thisFunction.isVariable (ident) : this.
 }, "~S");
 Clazz_defineMethod (c$, "cleanScriptComments", 
  function (script) {
+if (script.indexOf ('\u00A0') >= 0) script = script.$replace ('\u00A0', ' ');
 if (script.indexOf ('\u201C') >= 0) script = script.$replace ('\u201C', '"');
 if (script.indexOf ('\u201D') >= 0) script = script.$replace ('\u201D', '"');
 if (script.indexOf ('\uFEFF') >= 0) script = script.$replace ('\uFEFF', ' ');
@@ -4926,10 +4927,11 @@ this.setShapeProperty (iShape, "init", null);
 var value = NaN;
 var type = J.atomdata.RadiusData.EnumType.ABSOLUTE;
 var ipt = 1;
+var isOnly = false;
 while (true) {
 switch (this.getToken (ipt).tok) {
 case 1073742072:
-this.restrictSelected (false, false);
+isOnly = true;
 case 1073742335:
 value = 1;
 type = J.atomdata.RadiusData.EnumType.FACTOR;
@@ -4941,6 +4943,9 @@ case 1073741976:
 this.setShapeProperty (iShape, "ignore", this.atomExpressionAt (ipt + 1));
 ipt = this.iToken + 1;
 continue;
+case 3:
+isOnly = (this.tokAt (ipt + 1) == 1073742072 || this.floatParameter (ipt) < 0);
+break;
 case 2:
 var dotsParam = this.intParameter (ipt);
 if (this.tokAt (ipt + 1) == 1665140738) {
@@ -4957,10 +4962,12 @@ return;
 }
 break;
 }
-var rd = (Float.isNaN (value) ? this.encodeRadiusParameter (ipt, false, true) :  new J.atomdata.RadiusData (null, value, type, J.c.VDW.AUTO));
+var rd = (Float.isNaN (value) ? this.encodeRadiusParameter (ipt, isOnly, true) :  new J.atomdata.RadiusData (null, value, type, J.c.VDW.AUTO));
 if (rd == null) return;
 if (Float.isNaN (rd.value)) this.invArg ();
-this.setShapeSize (iShape, rd);
+if (isOnly) {
+this.restrictSelected (false, false);
+}this.setShapeSize (iShape, rd);
 }, "~N");
 Clazz_defineMethod (c$, "cmdEcho", 
  function (index) {
@@ -6376,7 +6383,8 @@ var cameraX = NaN;
 var cameraY = NaN;
 var pymolView = null;
 var q = null;
-switch (this.getToken (i).tok) {
+var tok = this.getToken (i).tok;
+switch (tok) {
 case 1073742110:
 pymolView = this.floatParameterSet (++i, 18, 21);
 i = this.iToken + 1;
@@ -6472,7 +6480,7 @@ axis.set (aa.x, aa.y, aa.z);
 degrees = (isMolecular ? -1 : 1) * (aa.angle * 180.0 / 3.141592653589793);
 }if (Float.isNaN (axis.x) || Float.isNaN (axis.y) || Float.isNaN (axis.z)) axis.set (0, 0, 0);
  else if (axis.length () == 0 && degrees == 0) degrees = NaN;
-isChange = !this.vwr.tm.isInPosition (axis, degrees);
+isChange = (tok == 134221850 || !this.vwr.tm.isInPosition (axis, degrees));
 if (this.isFloatParameter (i)) zoom = this.floatParameter (i++);
 if (this.isFloatParameter (i) && !this.isCenterParameter (i)) {
 xTrans = this.floatParameter (i++);
@@ -12511,13 +12519,13 @@ case 268435538:
 if (x1.tok != 10 || x2.tok != 10) return false;
 return this.addXBs (JU.BSUtil.toggleInPlace (JU.BSUtil.copy (x1.value), x2.value));
 case 268435858:
-return this.addXBool (x1.asFloat () <= x2.asFloat ());
+return this.addXBool (x1.tok == 2 && x1.tok == 2 ? x1.intValue <= x2.intValue : x1.asFloat () <= x2.asFloat ());
 case 268435857:
-return this.addXBool (x1.asFloat () >= x2.asFloat ());
+return this.addXBool (x1.tok == 2 && x1.tok == 2 ? x1.intValue >= x2.intValue : x1.asFloat () >= x2.asFloat ());
 case 268435856:
-return this.addXBool (x1.asFloat () > x2.asFloat ());
+return this.addXBool (x1.tok == 2 && x1.tok == 2 ? x1.intValue > x2.intValue : x1.asFloat () > x2.asFloat ());
 case 268435859:
-return this.addXBool (x1.asFloat () < x2.asFloat ());
+return this.addXBool (x1.tok == 2 && x1.tok == 2 ? x1.intValue < x2.intValue : x1.asFloat () < x2.asFloat ());
 case 268435860:
 return this.addXBool (JS.SV.areEqual (x1, x2));
 case 268435861:
@@ -12977,7 +12985,7 @@ case 1111492616:
 case 1111492617:
 case 1145047053:
 var ptfu = JU.P3.newP (x2.value);
-this.vwr.toFractional (ptfu, false);
+this.vwr.toFractional (ptfu, true);
 return (op.intValue == 1145047053 ? this.addXPt (ptfu) : this.addXFloat (op.intValue == 1111492615 ? ptfu.x : op.intValue == 1111492616 ? ptfu.y : ptfu.z));
 case 1111490577:
 case 1111490578:

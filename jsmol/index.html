@@ -55,12 +55,20 @@ var JmolInfo = {
 // called from JSmol when a model is loaded or cleared
 
 var loadStructCallback = function(app,filename) {
-   if (!filename)
+   if (!filename) {
     return;
-   setFormat();
-   if (!from2D)
-    to2D();
-   showSmiles(true)
+   }
+   //setFormat();
+   //if (!from2D) {
+   // to2D();
+   //}
+   //showSmiles(true);
+   if (filename.split('.').pop()=='xyz'){
+     x = confirm("Calculate aromatic bonds for .xyz file?");
+     if (x==True) {
+       Jmol.script(jmol,fixPhenyls);
+     }
+   }
 }
 
 // specify drop-down options for [search]
@@ -135,6 +143,14 @@ function showSmiles(from3d) {
   //$("#jsmesmiles").html(jme._getSmiles());
 }
 
+function applyToAll(jmolcommand) {
+  return "a={selected};select all;"+jmolcommand+";select a;";
+}
+
+function constrain(atoms){
+  return "asdf";
+}
+
 $(document).ready(function() {
   $( "#accordion" ).accordion();
   $( "#tabs" ).tabs({active:1});
@@ -197,37 +213,30 @@ $(document).ready(function() {
   </div>
   <h3>View</h3>
   <div>
-    style: 
     <script>
-      Jmol.jmolLink(jmol,"wireframe -0.1", "wireframe")
-      Jmol.jmolLink(jmol,"spacefill only;spacefill 23%;wireframe 0.15", "ball&stick")
-      Jmol.jmolLink(jmol,"spacefill", "spacefill")
-     </script>
-     background:
-    <script>
+      Jmol.jmolLink(jmol,"centerAt boundbox 0 0 0", "re-center")
+      Jmol.jmolHtml("<br /><b>style:</b>");
+      Jmol.jmolLink(jmol,applyToAll("wireframe -0.1"), "wireframe")
+      Jmol.jmolLink(jmol,applyToAll("spacefill only;spacefill 23%;wireframe 0.15"), "ball&stick")
+      Jmol.jmolLink(jmol,applyToAll("spacefill"), "spacefill")
+     Jmol.jmolHtml("<br /><b>background:</b>");
       Jmol.jmolLink(jmol,"set backgroundcolor='white'", "white")
-      Jmol.jmolLink(jmol,"set backgroundcolor='#ddd'", "gray")
+      Jmol.jmolLink(jmol,"set backgroundcolor='#aaaaaa'", "gray")
       Jmol.jmolLink(jmol,"set backgroundcolor='black'", "black")
      </script>
      <script>
-           Jmol.jmolLink(jmol,"centerAt boundbox 0 0 0", "re-center")
-           Jmol.jmolLink(jmol,"select all;label %a;select none;", "labels ON")
-           Jmol.jmolLink(jmol,"select all;label off;select none;", "labels OFF")           
-           Jmol.jmolLink(jmol,"set showHydrogens true", "H ON")
-           Jmol.jmolLink(jmol,"set showHydrogens false", "H OFF")
+           
+           Jmol.jmolHtml("<br /><b>labels:</b>");
+           Jmol.jmolLink(jmol,applyToAll("label %a"), "ON")
+           Jmol.jmolLink(jmol,applyToAll("label off"), "OFF")           
+      Jmol.jmolHtml("<br /><b>H atoms:</b>");
+      Jmol.jmolLink(jmol,"set showHydrogens true", "ON");
+      Jmol.jmolLink(jmol,"set showHydrogens false", "OFF");
+      Jmol.jmolHtml("<br /><b>color:</b>");
+      Jmol.jmolLink(jmol,"color {all} cpk", "element");
+      Jmol.jmolLink(jmol,"color {all} molecule", "molecule");
+      Jmol.jmolLink(jmol,"select all;mydata={all}.atomIndex.all;data 'property_1 @mydata';propertyColorScheme='rainbow';color atoms property_1;select none;", "&#127752;","","rainbow");
      </script>
-    color:
-    <script>   
-      Jmol.jmolLink(jmol,"color {all} cpk", "element")
-      Jmol.jmolLink(jmol,"color {all} molecule", "molecule")
-      Jmol.jmolLink(jmol,"select all;mydata={all}.atomIndex.all;data 'property_1 @mydata';propertyColorScheme='rainbow';color atoms property_1;select none;", "&#127752;","","rainbow")
-     </script>
-          
-    <!-- <script>
-      Jmol.jmolButton(jmol,"wireframe -0.1 #alt:SETTING Line", "wireframe")
-      Jmol.jmolButton(jmol,"spacefill only;spacefill 23%;wireframe 0.15 #alt:SETTING Ball and Stick","ball&stick");
-      Jmol.jmolButton(jmol,"spacefill #alt:SETTING van der Waals Spheres", "spacefill");	
-    </script> -->
   </div>
   <h3>Build</h3>
   <div>
@@ -253,40 +262,34 @@ $(document).ready(function() {
       Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignBond_PARTIALDOUBLE", "≃","","partial double bond")
       Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignBond_DOUBLE", "=","","double bond")
       Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignBond_TRIPLE", "≡","","triple bond")
-
+      Jmol.jmolLink(jmol,"<br />minimize addhydrogens", "fix H","","add missing hydrogens and minimize")
+    
   </script>
   </div>
   <h3>Sculpt</h3>
   <div>
+  duplicate selected?<br />
   <script>
       Jmol.jmolLink(jmol,"load", "&#x27F2;","reload","reload")
       Jmol.jmolLink(jmol,"undomove", "&#x21A9;","undo","undoMove")
       Jmol.jmolLink(jmol,"redomove", "&#x21AA;","redo","redoMove")
-  </script>
-  Select:
-  <script>   
-      Jmol.jmolLink(jmol,"set pickingstyle select none; set picking select atom", "atom")
-      Jmol.jmolLink(jmol,"set pickingstyle select drag; set picking select atom", "box")
+      Jmol.jmolHtml("<br /><b>Select:</b>");
+      Jmol.jmolLink(jmol,"set pickingstyle select drag; set picking select atom", "atom")
       Jmol.jmolLink(jmol,"select none", "∅","selectnone","select none")
       Jmol.jmolLink(jmol,"select all", "∀","selectall","select all")
       Jmol.jmolLink(jmol,"select {not selected}", "∉", "invert","invert selection")
-     </script>
-  Delete:
-  <script>   
-      Jmol.jmolLink(jmol,"delete selected", "selection")
+      Jmol.jmolHtml("<br /><b>Delete:</b>");   
+      Jmol.jmolLink(jmol,"delete selected", "selected")
       Jmol.jmolLink(jmol,"set picking deleteatom;set picking deletebond; set bondpicking true;", "onClick")
-     </script>
-  Move:
-    <script>   
+      Jmol.jmolHtml("<br /><b>Move:</b>");
       Jmol.jmolLink(jmol,"set picking dragatom", "atom")
       Jmol.jmolLink(jmol,"set picking dragligand", "molecule")
-     </script>
-     duplicate selected
-     Minimize:
-         <script>   
-      Jmol.jmolLink(jmol,"minimize {selected}", "selected")
+      Jmol.jmolHtml("<br /><b>Minimize:</b>");  
+      Jmol.jmolLink(jmol,"minimize select {selected}", "selected")
       Jmol.jmolLink(jmol,"minimize","all")
-      Jmol.jmolLink(jmol,"set picking dragminimize","drag+minimize")
+      Jmol.jmolHtml("<br /><b>Drag+Minimize:</b>");  
+      Jmol.jmolLink(jmol,"set picking dragminimize","ON")
+      Jmol.jmolLink(jmol,"set picking ident","OFF")
       var fixPhenyls = `a = {_C}.length;
 for (i from [1,a]) {
 	if ({_C}[i].valence == 3){
@@ -303,9 +306,14 @@ for (i from [1,a]) {
 }
 reset aromatic;
 calculate aromatic;`
-	Jmol.jmolLink(jmol,fixPhenyls, "rebond aromatics")	
+	Jmol.jmolLink(jmol,fixPhenyls, "<br />rebond aromatics","","calculate aromatic C-C bonds, useful for minimization from .xyz files")
+	Jmol.jmolHtml("<br /><b>Constrain:</b>");
+	Jmol.jmolLink(jmol,constrain(2),"–","","bond")  
+      Jmol.jmolLink(jmol,constrain(3),"&#8736;","","angle")	
+      Jmol.jmolLink(jmol,constrain(3),"&#8847;","","dihedral")
+      Jmol.jmolLink(jmol,"minimize constraint clear;","clear","","clear all constraints")
      </script>
-     constrain/fix specific atoms during minimization?
+     
   </div>
   <h3>Special</h3>
   <div>

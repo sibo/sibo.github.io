@@ -783,13 +783,13 @@ case 268435538:
 if (x1.tok != 10 || x2.tok != 10) return false;
 return this.addXBs (JU.BSUtil.toggleInPlace (JU.BSUtil.copy (x1.value), x2.value));
 case 268435858:
-return this.addXBool (x1.asFloat () <= x2.asFloat ());
+return this.addXBool (x1.tok == 2 && x1.tok == 2 ? x1.intValue <= x2.intValue : x1.asFloat () <= x2.asFloat ());
 case 268435857:
-return this.addXBool (x1.asFloat () >= x2.asFloat ());
+return this.addXBool (x1.tok == 2 && x1.tok == 2 ? x1.intValue >= x2.intValue : x1.asFloat () >= x2.asFloat ());
 case 268435856:
-return this.addXBool (x1.asFloat () > x2.asFloat ());
+return this.addXBool (x1.tok == 2 && x1.tok == 2 ? x1.intValue > x2.intValue : x1.asFloat () > x2.asFloat ());
 case 268435859:
-return this.addXBool (x1.asFloat () < x2.asFloat ());
+return this.addXBool (x1.tok == 2 && x1.tok == 2 ? x1.intValue < x2.intValue : x1.asFloat () < x2.asFloat ());
 case 268435860:
 return this.addXBool (JS.SV.areEqual (x1, x2));
 case 268435861:
@@ -1249,7 +1249,7 @@ case 1111492616:
 case 1111492617:
 case 1145047053:
 var ptfu = JU.P3.newP (x2.value);
-this.vwr.toFractional (ptfu, false);
+this.vwr.toFractional (ptfu, true);
 return (op.intValue == 1145047053 ? this.addXPt (ptfu) : this.addXFloat (op.intValue == 1111492615 ? ptfu.x : op.intValue == 1111492616 ? ptfu.y : ptfu.z));
 case 1111490577:
 case 1111490578:

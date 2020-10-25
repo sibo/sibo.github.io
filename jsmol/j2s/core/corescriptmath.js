@@ -1781,8 +1781,29 @@ default:
 return false;
 case 1:
 if (args[0].tok == 3 || args[0].tok == 2) return mp.addXInt (args[0].asInt ());
-var s = JS.SV.sValue (args[0]);
-if (args[0].tok == 7) s = "{" + s + "}";
+var s = null;
+if (args[0].tok == 7) {
+var list = args[0].getList ();
+var len = list.size ();
+if (len == 0) {
+return false;
+}switch (list.get (0).tok) {
+case 2:
+case 3:
+break;
+case 4:
+s = list.get (0).value;
+if (!s.startsWith ("{") || Clazz_instanceOf (JU.Escape.uP (s), String)) {
+s = null;
+break;
+}var a =  new JU.Lst ();
+for (var i = 0; i < len; i++) {
+a.addLast (JS.SV.getVariable (JU.Escape.uP (JS.SV.sValue (list.get (i)))));
+}
+return mp.addXList (a);
+}
+s = "{" + JS.SV.sValue (args[0]) + "}";
+}if (s == null) s = JS.SV.sValue (args[0]);
 var pt = JU.Escape.uP (s);
 return (Clazz_instanceOf (pt, JU.P3) ? mp.addXPt (pt) : mp.addXStr ("" + pt));
 case 2:
@@ -2529,6 +2550,7 @@ ndata = sv.size ();
 if (ndata == 0) {
 if (tok != 1275068437) break;
 } else {
+if (tok != 1275068437) {
 var sv0 = sv.get (0);
 if (sv0.tok == 8) return this.getMinMaxPoint (sv, tok);
 if (sv0.tok == 4 && (sv0.value).startsWith ("{")) {
@@ -2536,7 +2558,7 @@ var pt = JS.SV.ptValue (sv0);
 if (Clazz_instanceOf (pt, JU.P3)) return this.getMinMaxPoint (sv, tok);
 if (Clazz_instanceOf (pt, JU.P4)) return this.getMinMaxQuaternion (sv, tok);
 break;
-}}} else {
+}}}} else {
 break;
 }var sum;
 var minMax;

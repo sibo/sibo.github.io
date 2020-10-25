@@ -64,9 +64,9 @@
 ){
 var $t$;
 //var c$;
-Jmol.___JmolDate="$Date: 2020-09-06 18:16:32 -0500 (Sun, 06 Sep 2020) $"
+Jmol.___JmolDate="$Date: 2020-10-11 08:17:35 -0500 (Sun, 11 Oct 2020) $"
 Jmol.___fullJmolProperties="src/org/jmol/viewer/Jmol.properties"
-Jmol.___JmolVersion="14.31.4"
+Jmol.___JmolVersion="14.31.12"
 // JSmolJavaExt.js
  
 
@@ -27286,6 +27286,10 @@ function (x1, x2) {
 if (x1 == null || x2 == null) return false;
 if (x1.tok == x2.tok) {
 switch (x1.tok) {
+case 2:
+if (x2.tok == 2) {
+return x1.intValue == x2.intValue;
+}break;
 case 4:
 return (x1.value).equalsIgnoreCase (x2.value);
 case 10:
@@ -27303,7 +27307,10 @@ return (x1.value).equals (x2.value);
 case 12:
 return (x1.value).equals (x2.value);
 }
-}return (Math.abs (JS.SV.fValue (x1) - JS.SV.fValue (x2)) < 0.000001);
+}System.out.println (JS.SV.fValue (x1));
+System.out.println (Math.abs (JS.SV.fValue (x1) - JS.SV.fValue (x2)));
+System.out.println (JS.SV.fValue (x2));
+return (Math.abs (JS.SV.fValue (x1) - JS.SV.fValue (x2)) < 0.000001);
 }, "JS.SV,JS.SV");
 c$.isLike = Clazz_defineMethod (c$, "isLike", 
 function (x1, x2) {
@@ -27627,6 +27634,8 @@ var d = JS.SV.fValue (b);
 return (c < d ? -1 : c > d ? 1 : 0);
 }if (a.tok == 4 || b.tok == 4) return JS.SV.sValue (a).compareTo (JS.SV.sValue (b));
 }switch (a.tok) {
+case 2:
+return (a.intValue < b.intValue ? -1 : a.intValue > b.intValue ? 1 : 0);
 case 4:
 return JS.SV.sValue (a).compareTo (JS.SV.sValue (b));
 case 7:
@@ -29034,8 +29043,9 @@ return n;
 }, "~N,~N");
 Clazz_defineMethod (c$, "setColixAndPalette", 
 function (colix, paletteID, atomIndex) {
-if (this.colixes == null) System.out.println ("ATOMSHAPE ERROR");
-this.colixes[atomIndex] = colix = this.getColixI (colix, paletteID, atomIndex);
+if (this.colixes == null) {
+this.checkColixLength (-1, this.ac);
+}this.colixes[atomIndex] = colix = this.getColixI (colix, paletteID, atomIndex);
 this.bsColixSet.setBitTo (atomIndex, colix != 0 || this.shapeID == 0);
 this.paletteIDs[atomIndex] = paletteID;
 }, "~N,~N,~N");
@@ -31361,6 +31371,7 @@ iValue = Clazz_floatToInt (fValue);
 if (n >= list.length) return;
 sValue = list[n++];
 }var atom = this.at[i];
+var f;
 switch (tok) {
 case 1086326786:
 this.setAtomName (i, sValue, true);
@@ -31419,8 +31430,8 @@ case 1113589786:
 this.setHydrophobicity (i, fValue);
 break;
 case 1128269825:
-if (fValue < 2 && fValue > 0.01) fValue = 100 * fValue;
-this.setOccupancy (i, fValue, true);
+f = (fValue < 2 && fValue >= 0.01 ? 100 * fValue : fValue);
+this.setOccupancy (i, f, true);
 break;
 case 1111492619:
 this.setPartialCharge (i, fValue, true);
@@ -31440,9 +31451,10 @@ this.vwr.shm.setAtomLabel (sValue, i);
 break;
 case 1665140738:
 case 1112152075:
-if (fValue < 0) fValue = 0;
- else if (fValue > 16) fValue = 16.1;
-atom.madAtom = (Clazz_floatToShort (fValue * 2000));
+f = fValue;
+if (f < 0) f = 0;
+ else if (f > 16) f = 16.1;
+atom.madAtom = (Clazz_floatToShort (f * 2000));
 break;
 case 1113589787:
 this.vwr.slm.setSelectedAtom (atom.i, (fValue != 0));
@@ -65822,9 +65834,9 @@ c$ = Clazz_p0p ();
 Clazz_defineStatics (c$,
 "MAXABS", 4);
 });
-Jmol.___JSVDate="$Date: 2019-06-04 06:17:10 -0500 (Tue, 04 Jun 2019) $"
-Jmol.___JSVSvnRev="$LastChangedRevision: 21984 $"
-Jmol.___JSVVersion="14.2.8"
+Jmol.___JSVDate="$Date: 2020-09-26 05:35:55 -0500 (Sat, 26 Sep 2020) $"
+Jmol.___JSVSvnRev="$LastChangedRevision: 22034 $"
+Jmol.___JSVVersion="14.31.8"
 Clazz_declarePackage ("JSV.common");
 c$ = Clazz_declareType (JSV.common, "JSVersion");
 Clazz_defineStatics (c$,
@@ -66369,8 +66381,8 @@ Clazz_defineStatics (c$,
 c$.htCorrelationCache = c$.prototype.htCorrelationCache =  new java.util.Hashtable ();
 Clazz_defineStatics (c$,
 "nciResolver", "https://cactus.nci.nih.gov/chemical/structure/%FILE/file?format=sdf&get3d=True",
-"nmrdbServerH1", "http://www.nmrdb.org/tools/jmol/predict.php?POST?molfile=",
-"nmrdbServerC13", "http://www.nmrdb.org/service/jsmol13c?POST?molfile=",
+"nmrdbServerH1", "https://www.nmrdb.org/tools/jmol/predict.php?POST?molfile=",
+"nmrdbServerC13", "https://www.nmrdb.org/service/jsmol13c?POST?molfile=",
 "stringCount", 0);
 });
 Clazz_declarePackage ("JSV.common");
@@ -73495,6 +73507,7 @@ this.isZipFile = false;
 this.filePath = null;
 this.loadImaginary = true;
 this.isSimulation = false;
+this.ignoreShiftReference = false;
 this.isTabularData = false;
 this.firstSpec = 0;
 this.lastSpec = 0;
@@ -73569,8 +73582,7 @@ if (br != null) br.close ();
 if (header != null) JU.Logger.error (header + "...");
 var s = e.getMessage ();
 {
-}e.printStackTrace ();
-throw  new JSV.exception.JSVException ("Error reading data: " + s);
+}throw  new JSV.exception.JSVException ("Error reading data: " + s);
 } else {
 throw e;
 }
@@ -73606,6 +73618,8 @@ continue;
 this.getNTupleSpectra (dataLDRTable, spectrum, label);
 spectrum = null;
 continue;
+}if (label.equals ("##JCAMPDX")) {
+this.setVenderSpecificValues (this.t.rawLine);
 }if (spectrum == null) spectrum =  new JSV.common.Spectrum ();
 if (this.readDataLabel (spectrum, label, value, this.errorLog, this.obscure)) continue;
 JSV.source.JDXReader.addHeader (dataLDRTable, this.t.rawLabel, value);
@@ -73616,6 +73630,12 @@ if (!isOK) throw  new JSV.exception.JSVException ("##TITLE record not found");
 this.source.setErrorLog (this.errorLog.toString ());
 return this.source;
 }, "~O");
+Clazz_defineMethod (c$, "setVenderSpecificValues", 
+ function (rawLine) {
+if (rawLine.indexOf ("JEOL") >= 0) {
+System.out.println ("Skipping ##SHIFTREFERENCE for JEOL " + rawLine);
+this.ignoreShiftReference = true;
+}}, "~S");
 Clazz_defineMethod (c$, "getValue", 
  function (label) {
 var value = (this.isTabularDataLabel (label) ? "" : this.t.getValue ());
@@ -73880,7 +73900,7 @@ spectrum.dataPointNum = 1;
 spectrum.shiftRefType = 2;
 return false;
 }if (label.equals ("##.SHIFTREFERENCE ")) {
-if (!(spectrum.dataType.toUpperCase ().contains ("SPECTRUM"))) return true;
+if (this.ignoreShiftReference || !(spectrum.dataType.toUpperCase ().contains ("SPECTRUM"))) return true;
 value = JU.PT.replaceAllCharacters (value, ")(", "");
 var srt =  new java.util.StringTokenizer (value, ",");
 if (srt.countTokens () != 4) return true;
@@ -74026,9 +74046,10 @@ if (d < minMaxY[0]) minMaxY[0] = d;
 d = decompressor.getMaxY ();
 if (d > minMaxY[1]) minMaxY[1] = d;
 }var freq = (Double.isNaN (spec.freq2dX) ? spec.observedFreq : spec.freq2dX);
-if (spec.offset != 1.7976931348623157E308 && freq != 1.7976931348623157E308 && spec.dataType.toUpperCase ().contains ("SPECTRUM")) {
-JSV.common.Coordinate.applyShiftReference (xyCoords, spec.dataPointNum, spec.fileFirstX, spec.fileLastX, spec.offset, freq, spec.shiftRefType);
-}if (freq != 1.7976931348623157E308 && spec.getXUnits ().toUpperCase ().equals ("HZ")) {
+var isHz = freq != 1.7976931348623157E308 && spec.getXUnits ().toUpperCase ().equals ("HZ");
+if (spec.offset != 1.7976931348623157E308 && freq != 1.7976931348623157E308 && spec.dataType.toUpperCase ().contains ("SPECTRUM") && spec.jcampdx.indexOf ("JEOL") < 0) {
+JSV.common.Coordinate.applyShiftReference (xyCoords, spec.dataPointNum, spec.fileFirstX, spec.fileLastX, spec.offset, isHz ? freq : 1, spec.shiftRefType);
+}if (isHz) {
 JSV.common.Coordinate.applyScale (xyCoords, (1.0 / freq), 1);
 spec.setXUnits ("PPM");
 spec.setHZtoPPM (true);
@@ -74250,6 +74271,7 @@ this.value = null;
 this.labelLineNo = 0;
 this.line = null;
 this.lineNo = 0;
+this.rawLine = null;
 Clazz_instantialize (this, arguments);
 }, JSV.source, "JDXSourceStreamTokenizer");
 Clazz_makeConstructor (c$, 
@@ -74286,6 +74308,7 @@ throw e;
 if (this.line.startsWith ("##")) break;
 this.line = null;
 }
+this.rawLine = this.line;
 var pt = this.line.indexOf ("=");
 if (pt < 0) {
 if (isGet) JU.Logger.info ("BAD JDX LINE -- no '=' (line " + this.lineNo + "): " + this.line);

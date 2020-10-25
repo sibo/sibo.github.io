@@ -167,20 +167,9 @@ JU.BSUtil.andNot (this.bsTaint, bsFixed);
 this.vwr.ms.setTaintedAtoms (this.bsTaint, 2);
 }if (bsFixed != null) this.bsFixed = bsFixed;
 this.setAtomPositions ();
-if (this.constraints != null) {
-for (var i = this.constraints.size (); --i >= 0; ) {
-var constraint = this.constraints.get (i);
-var aList = constraint.indexes;
-var minList = constraint.minList;
-var nAtoms = aList[0] = Math.abs (aList[0]);
-for (var j = 1; j <= nAtoms; j++) {
-if (steps <= 0 || !this.bsAtoms.get (aList[j])) {
-aList[0] = -nAtoms;
-break;
-}minList[j - 1] = this.atomMap[aList[j]];
-}
-}
-}this.pFF.setConstraints (this);
+if (this.constraints != null) for (var i = this.constraints.size (); --i >= 0; ) this.constraints.get (i).set (steps, this.bsAtoms, this.atomMap);
+
+this.pFF.setConstraints (this);
 if (steps <= 0) this.getEnergyOnly ();
  else if (this.isSilent || !this.vwr.useMinimizationThread ()) this.minimizeWithoutThread ();
  else this.setMinimizationOn (true);

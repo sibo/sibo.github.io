@@ -47,9 +47,13 @@ var fid = null;
 var n = cr.parser.getColumnCount ();
 for (var i = 0; i < n; ++i) {
 switch (tok = this.fieldProperty (cr, i)) {
+case 0:
+pt[0] = pt[1] = pt[2] = 0;
+type_id = "F_";
+fid = this.field;
+break;
 case 1:
 cr.haveCellWaveVector = true;
-case 0:
 case 41:
 case 42:
 case 43:
@@ -64,10 +68,6 @@ case 46:
 switch (tok) {
 case 1:
 type_id = "W_";
-break;
-case 0:
-type_id = "F_";
-fid = this.field;
 break;
 case 41:
 case 42:

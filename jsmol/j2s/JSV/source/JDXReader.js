@@ -11,6 +11,7 @@ this.isZipFile = false;
 this.filePath = null;
 this.loadImaginary = true;
 this.isSimulation = false;
+this.ignoreShiftReference = false;
 this.isTabularData = false;
 this.firstSpec = 0;
 this.lastSpec = 0;
@@ -85,8 +86,7 @@ if (br != null) br.close ();
 if (header != null) JU.Logger.error (header + "...");
 var s = e.getMessage ();
 {
-}e.printStackTrace ();
-throw  new JSV.exception.JSVException ("Error reading data: " + s);
+}throw  new JSV.exception.JSVException ("Error reading data: " + s);
 } else {
 throw e;
 }
@@ -122,6 +122,8 @@ continue;
 this.getNTupleSpectra (dataLDRTable, spectrum, label);
 spectrum = null;
 continue;
+}if (label.equals ("##JCAMPDX")) {
+this.setVenderSpecificValues (this.t.rawLine);
 }if (spectrum == null) spectrum =  new JSV.common.Spectrum ();
 if (this.readDataLabel (spectrum, label, value, this.errorLog, this.obscure)) continue;
 JSV.source.JDXReader.addHeader (dataLDRTable, this.t.rawLabel, value);
@@ -132,6 +134,12 @@ if (!isOK) throw  new JSV.exception.JSVException ("##TITLE record not found");
 this.source.setErrorLog (this.errorLog.toString ());
 return this.source;
 }, "~O");
+Clazz.defineMethod (c$, "setVenderSpecificValues", 
+ function (rawLine) {
+if (rawLine.indexOf ("JEOL") >= 0) {
+System.out.println ("Skipping ##SHIFTREFERENCE for JEOL " + rawLine);
+this.ignoreShiftReference = true;
+}}, "~S");
 Clazz.defineMethod (c$, "getValue", 
  function (label) {
 var value = (this.isTabularDataLabel (label) ? "" : this.t.getValue ());
@@ -396,7 +404,7 @@ spectrum.dataPointNum = 1;
 spectrum.shiftRefType = 2;
 return false;
 }if (label.equals ("##.SHIFTREFERENCE ")) {
-if (!(spectrum.dataType.toUpperCase ().contains ("SPECTRUM"))) return true;
+if (this.ignoreShiftReference || !(spectrum.dataType.toUpperCase ().contains ("SPECTRUM"))) return true;
 value = JU.PT.replaceAllCharacters (value, ")(", "");
 var srt =  new java.util.StringTokenizer (value, ",");
 if (srt.countTokens () != 4) return true;
@@ -542,9 +550,10 @@ if (d < minMaxY[0]) minMaxY[0] = d;
 d = decompressor.getMaxY ();
 if (d > minMaxY[1]) minMaxY[1] = d;
 }var freq = (Double.isNaN (spec.freq2dX) ? spec.observedFreq : spec.freq2dX);
-if (spec.offset != 1.7976931348623157E308 && freq != 1.7976931348623157E308 && spec.dataType.toUpperCase ().contains ("SPECTRUM")) {
-JSV.common.Coordinate.applyShiftReference (xyCoords, spec.dataPointNum, spec.fileFirstX, spec.fileLastX, spec.offset, freq, spec.shiftRefType);
-}if (freq != 1.7976931348623157E308 && spec.getXUnits ().toUpperCase ().equals ("HZ")) {
+var isHz = freq != 1.7976931348623157E308 && spec.getXUnits ().toUpperCase ().equals ("HZ");
+if (spec.offset != 1.7976931348623157E308 && freq != 1.7976931348623157E308 && spec.dataType.toUpperCase ().contains ("SPECTRUM") && spec.jcampdx.indexOf ("JEOL") < 0) {
+JSV.common.Coordinate.applyShiftReference (xyCoords, spec.dataPointNum, spec.fileFirstX, spec.fileLastX, spec.offset, isHz ? freq : 1, spec.shiftRefType);
+}if (isHz) {
 JSV.common.Coordinate.applyScale (xyCoords, (1.0 / freq), 1);
 spec.setXUnits ("PPM");
 spec.setHZtoPPM (true);

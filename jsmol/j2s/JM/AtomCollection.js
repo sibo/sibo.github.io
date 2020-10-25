@@ -388,6 +388,7 @@ iValue = Clazz.floatToInt (fValue);
 if (n >= list.length) return;
 sValue = list[n++];
 }var atom = this.at[i];
+var f;
 switch (tok) {
 case 1086326786:
 this.setAtomName (i, sValue, true);
@@ -446,8 +447,8 @@ case 1113589786:
 this.setHydrophobicity (i, fValue);
 break;
 case 1128269825:
-if (fValue < 2 && fValue > 0.01) fValue = 100 * fValue;
-this.setOccupancy (i, fValue, true);
+f = (fValue < 2 && fValue >= 0.01 ? 100 * fValue : fValue);
+this.setOccupancy (i, f, true);
 break;
 case 1111492619:
 this.setPartialCharge (i, fValue, true);
@@ -467,9 +468,10 @@ this.vwr.shm.setAtomLabel (sValue, i);
 break;
 case 1665140738:
 case 1112152075:
-if (fValue < 0) fValue = 0;
- else if (fValue > 16) fValue = 16.1;
-atom.madAtom = (Clazz.floatToShort (fValue * 2000));
+f = fValue;
+if (f < 0) f = 0;
+ else if (f > 16) f = 16.1;
+atom.madAtom = (Clazz.floatToShort (f * 2000));
 break;
 case 1113589787:
 this.vwr.slm.setSelectedAtom (atom.i, (fValue != 0));
