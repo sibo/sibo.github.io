@@ -318,7 +318,30 @@ calculate aromatic;`
   </div>
   <h3>Special</h3>
   <div>
-  Plot Void Space with different gases
+  Plot Void Space with different gases (<a href="https://doi.org/10.1021/acsmacrolett.0c00555">published example</a>)
+  <table>
+	  <tr><th>gas</th><th>kinetic diameter</th><th>Void Space</th></tr>
+	  <script>
+		  var kineticDiameters = [ ["helium",2.6],
+					  ["hydrogen",2.89],
+					  ["carbon dioxide",3.30],
+					  ["argon",3.40],
+					  ["oxygen",3.46],
+					  ["nitrogen",3.64],
+					  ["carbon monoxide",3.76],
+					  ["methane",3.80],
+					  ["ethylene",3.90],
+					  ["propane",4.3],
+					  ["n-butane",4.3],
+					  ["propene",4.5],
+					  ["i-butane",5.0]];
+		  var x = "";
+		  for (i = 0; i < kineticDiameters.length; i++) {
+			  x += "<tr><td>" + kineticDiameters[i][0] + "</td><td>" + kineticDiameters[i][1].toFixed(2) + "</td><td>" + Jmol.jmolLink(jmol,"boundbox on; hide all; plot isosurface " + kineticDiameters[i][1]/2) + "</td></tr>";
+		  }
+		  Jmol.jmolHtml(x);
+	  </script>
+	  </table>
   </div>
 </div>    
 
