@@ -173,6 +173,7 @@ function voidTable(){
 }
 	
 $(document).ready(function() {
+  $( "#special" ).accordion();
   $( "#accordion" ).accordion();
   $( "#tabs" ).tabs({active:1});
   setTimeout(function(){ $("#startTab" ).click()}, 2000);
@@ -339,12 +340,13 @@ calculate aromatic;`
      
   </div>
   <h3>Special</h3>
-  <div>
-  Plot Void Space of Polymers With Different Gases (<a href="https://doi.org/10.1021/acsmacrolett.0c00555">published example</a>)
-  <table id="gasVoidTable">
-	  <tr><th>gas</th><th>kinetic diameter<a href="https://books.google.com/books?hl=en&lr=&id=bUV5DAAAQBAJ&oi=fnd&pg=PP1&ots=U5gETzUwoD&sig=iQoQzX9Jc9C-3Rc9CYH0TfgazcU#v=onepage&q=butane&f=false"><sup>source</sup></a></th><th>Void Space</th></tr>
-	  </table>
-
+  <div id="special">
+	  <h4>Plot Void Space of Polymers</h4>
+	  <div> See <a href="https://doi.org/10.1021/acsmacrolett.0c00555">published example</a>. See source for kinetic diameters of various gas probe molecules: <a href="https://books.google.com/books?hl=en&lr=&id=bUV5DAAAQBAJ&oi=fnd&pg=PP1&ots=U5gETzUwoD&sig=iQoQzX9Jc9C-3Rc9CYH0TfgazcU#v=onepage&q=butane&f=false">link</a>
+		  <table id="gasVoidTable">
+			  <tr><th>gas</th><th>kinetic diameter</th><th>Void Space</th></tr>
+		  </table>
+	  </div>
   </div>
 </div>    
 
