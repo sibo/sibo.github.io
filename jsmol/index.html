@@ -338,7 +338,7 @@ calculate aromatic;`
 					  ["i-butane",5.0]];
 		  var x = "";
 		  for (i = 0; i < kineticDiameters.length; i++) {
-			  x += "<tr><td>" + kineticDiameters[i][0] + "</td><td>" + kineticDiameters[i][1].toFixed(2) + "</td><td><script>Jmol.jmolLink(jmol,'boundbox on; hide all; isosurface cavity " + kineticDiameters[i][1]/2 + "','plot')</script></td></tr>";
+			  x += "<tr><td>" + kineticDiameters[i][0] + "</td><td>" + kineticDiameters[i][1].toFixed(2) + "</td><td>" + Jmol.jmolLink(jmol,'boundbox on; hide all; isosurface cavity ' + kineticDiameters[i][1]/2,'plot') + "</td></tr>";
 		  }
 		  $("#gasVoidTable").append(x);
 	  </script>
