@@ -217,6 +217,7 @@ $(document).ready(function() {
       Jmol.jmolLink(jmol,"centerAt boundbox 0 0 0", "re-center")
       Jmol.jmolHtml("<br /><b>style:</b>");
       Jmol.jmolLink(jmol,applyToAll("wireframe -0.1"), "wireframe")
+      Jmol.jmolLink(jmol,applyToAll("wireframe 75"), "stick")
       Jmol.jmolLink(jmol,applyToAll("spacefill only;spacefill 23%;wireframe 0.15"), "ball&stick")
       Jmol.jmolLink(jmol,applyToAll("spacefill"), "spacefill")
      Jmol.jmolHtml("<br /><b>background:</b>");
@@ -333,13 +334,18 @@ calculate aromatic;`
 
   </div>
   <div id="about">
-  Powered by JSMol (<a href="https://chemapps.stolaf.edu/jmol/docs/">see documentation</a> for many text-based commands). Inspired by <a href="http://molview.org">molview</a> and <a href="https://arrows.emsl.pnnl.gov/api/">EMSL Arrows</a>.
+  Powered by JSMol (<a href="https://chemapps.stolaf.edu/jmol/docs/">see documentation</a> for hundreds of other text-based commands). Inspired by other HTML5 implementations of JSMol: <a href="https://chemapps.stolaf.edu/jmol/jsmol/hackamol.htm">Hack-a-Mol</a>, <a href="http://biomodel.uah.es/Jmol/resizable/inicio.htm">resizable JSMol</a>, <a href="http://molview.org">molview</a>, and <a href="https://arrows.emsl.pnnl.gov/api/">EMSL Arrows</a>. Many thanks go to Bob Hansen and Angel Herraez for developing JMol/JSMol and answering countless user questions. 
   
   <h3>Potential future features:</h3>
   <ul>
     <li>Return xtb output and optimized structure</li>
-    <li>Return NWChem input file for geometry optimization, frequency calculation, single-point calculation</li>
+    <li>Return NWChem input file for geometry optimization, frequency calculation, single-point calculation, constrainedOpt/TS</li>
+	  <li><a href="https://sourceforge.net/p/jmol/mailman/message/34611560/">comicbook style: set celShading True; set celShadingPower 10;</a></li>
+	  <li>automated SambvCa</li>
   </ul>
+	  
+	  <h3>Contact</h3>
+	  To provide feedback or request features, contact siboster [Åτ] g/mail [⋅] com
   </div>
 </div>
  
