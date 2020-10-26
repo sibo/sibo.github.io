@@ -318,7 +318,7 @@ calculate aromatic;`
   </div>
   <h3>Special</h3>
   <div>
-  Plot Void Space with different gases (<a href="https://doi.org/10.1021/acsmacrolett.0c00555">published example</a>)
+  Plot Void Space of Polymers With Different Gases (<a href="https://doi.org/10.1021/acsmacrolett.0c00555">published example</a>)
   <table id="gasVoidTable">
 	  <tr><th>gas</th><th>kinetic diameter<a href="https://books.google.com/books?hl=en&lr=&id=bUV5DAAAQBAJ&oi=fnd&pg=PP1&ots=U5gETzUwoD&sig=iQoQzX9Jc9C-3Rc9CYH0TfgazcU#v=onepage&q=butane&f=false"><sup>source</sup></a></th><th>Void Space</th></tr>
 	  </table>
@@ -338,7 +338,7 @@ calculate aromatic;`
 					  ["i-butane",5.0]];
 		  var x = "";
 		  for (i = 0; i < kineticDiameters.length; i++) {
-			  x += "<tr><td>" + kineticDiameters[i][0] + "</td><td>" + kineticDiameters[i][1].toFixed(2) + "</td><td>" + Jmol.jmolLink(jmol,"boundbox on; hide all; isosurface cavity " + kineticDiameters[i][1]/2,"plot") + "</td></tr>";
+			  x += "<tr><td>" + kineticDiameters[i][0] + "</td><td>" + kineticDiameters[i][1].toFixed(2) + "</td><td><script>Jmol.jmolLink(jmol,"boundbox on; hide all; isosurface cavity " + kineticDiameters[i][1]/2,"plot")</script></td></tr>";
 		  }
 		  $("#gasVoidTable").append(x);
 	  </script>
