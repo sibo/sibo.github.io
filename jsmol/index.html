@@ -173,8 +173,8 @@ function voidTable(){
 }
 	
 $(document).ready(function() {
+  $( "#specialTabs" ).tabs();
   $( "#accordion" ).accordion();
-  $( "#specialtabs" ).tabs({active:1});
   $( "#tabs" ).tabs({active:1});
   setTimeout(function(){ $("#startTab" ).click()}, 2000);
   $(document).tooltip();
