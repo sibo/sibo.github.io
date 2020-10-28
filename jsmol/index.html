@@ -35,8 +35,8 @@ var jme = "jme";
 // set up Jmol
 
 var JmolInfo = {
-	width: 700,
-	height: 700,
+	width: '700',
+	height: '700',
 	debug: false,
 	color: "white",
 	use: "HTML5",
@@ -148,9 +148,22 @@ function applyToAll(jmolcommand) {
   return "a={selected};select all;"+jmolcommand+";select a;";
 }
 
-function constrain(atoms){
-  return "asdf";
+var selected=[];
+var editAtoms=0;
+function constrain(nAtoms){
+  Jmol.script(jmol,'set picking IDENT;set PickCallBack "editor";');
+  editAtoms=nAtoms;
+  return;
 }
+function editor(app,callback){
+  selected.push(callback.split(' ')[0]);
+  if(selected.length == editAtoms){
+    alert("Editing: " + selected + " "+ selected.length + " "+ editAtoms);
+    selected=[];
+    Jmol.script(jmol,'set PickCallBack "none";');
+  }
+}
+  
 
 function voidTable(){
 		  var kineticDiameters = [ ["helium",2.6],
@@ -335,7 +348,7 @@ calculate aromatic;`
 	Jmol.jmolHtml("<br /><b>Constrain:</b>");
 	Jmol.jmolLink(jmol,constrain(2),"–","","bond")  
       Jmol.jmolLink(jmol,constrain(3),"&#8736;","","angle")	
-      Jmol.jmolLink(jmol,constrain(3),"&#8847;","","dihedral")
+      Jmol.jmolLink(jmol,constrain(4),"&#8847;","","dihedral")
       Jmol.jmolLink(jmol,"minimize constraint clear;","clear","","clear all constraints")
      </script>
      
