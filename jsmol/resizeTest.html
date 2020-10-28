@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>BosMol</title>
+<meta charset="utf-8" />
+<script type="text/javascript" src="JSmol.min.js"></script>
+<script type="text/javascript" src="JSmolJME.js"></script>
+<script type="text/javascript" language="javascript" src="jsme/jsme/jsme.nocache.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+<script type="text/javascript">
+
+// delete JMol tracker, as it gives an error on some systems
+delete Jmol._tracker;
+
+// load JSmol from the textarea 
+
+function loadMol() {
+  var s = $("#strucfile").val();
+  // check for 2D or 3D data:
+  var pt = s.indexOf("\n") + 21
+  if (s.indexOf("V2000") >= 0 && s.substring(pt, pt+2) == "2D") {
+    Jmol.jmeReadMolecule(jme, s)
+  } else {
+    s = "load data 'mydata'" + s + "\nend 'mydata'"
+    setTimeout(function() {Jmol.script(jmol, s)}, 10);
+  }
+}
+
+//Jmol._debugCode = true;//(s.indexOf("debugcode") >= 0);
+
+var jmol="jmol";
+var jme = "jme";
+
+// set up Jmol
+
+var JmolInfo = {
+	width: '100%',
+	height: '100%',
+	debug: false,
+	color: "white",
+	use: "HTML5",
+  addSelectionOptions: false,
+	serverURL: "php/jsmol.php",
+  disableJ2SLoadMonitor: true,
+  disableInitialConsole: true,
+  loadstructcallback: "loadStructCallback",
+  jarPath: "java",
+	jarFile: "JmolAppletSigned.jar",
+  j2sPath: "j2s",
+	isSigned: true,
+  defaultModel: "$caffeine",
+	script: "frank off;select none;selectionHalos on;set zoomLarge off;",
+	
+}
+
+// called from JSmol when a model is loaded or cleared
+
+var loadStructCallback = function(app,filename) {
+   if (!filename) {
+    return;
+   }
+   //setFormat();
+   //if (!from2D) {
+   // to2D();
+   //}
+   //showSmiles(true);
+   if (filename.split('.').pop()=='xyz'){
+     x = confirm("Calculate aromatic bonds for .xyz file?");
+     if (x==True) {
+       Jmol.script(jmol,fixPhenyls);
+     }
+   }
+}
+
+// specify drop-down options for [search]
+
+Jmol.setGrabberOptions([["$", "NCI"], [":", "PubChem"]])
+
+
+// set up JSME
+
+var JMEInfo = {     
+	use: "HTML5"
+  ,visible: true
+  ,divId: "jmediv"
+  ,options : "autoez;nocanonize"
+  //,"jme" : startingStructure   
+}
+
+// arrow button actions -- "to2D" has been removed
+
+var from2D = false;
+function to3D() {
+  from2D = true;
+  Jmol.show2d(jmol, false)
+  showSmiles(false)
+  from2D = false;
+  $("#tabs").tabs("option","active",2);
+  $("#jmol_appletinfotablediv").focus();
+  $("#jmol_appletdiv").focus();
+  $("#jmol_canvas2d").focus();
+  $("#jmol_2dcanvasdiv").focus();
+  $("#jmol_infotablediv").focus();
+}
+
+function to2D() {
+  from2D = false;
+  Jmol.show2d(jmol, true);
+}
+
+function load1D() {
+	molname = 'tylenol';
+	var x = prompt('Enter the name or identifier (SMILES, InChI, CAS) of a molecule',molname);
+	if (!x) { quit }; 
+	molname = x; 
+	Jmol.script(jmol,"load $" + molname);
+	$("#startTab").click();
+}
+
+// links for SMILES, InChI, and InChIKey
+
+function google(query) {
+ return "<a title='google this' target=_blank href=\"https://www.google.com/search?q=" + encodeURIComponent('"' + query + '"') + "\">" + query + "</a>";
+}
+
+function ebiMatch(smiles) {
+ return "<a title='search ChEMBL' target=_blank href=\"https://www.ebi.ac.uk/chembl/api/data/molecule?molecule_structures__canonical_smiles__flexmatch=" 
+  + encodeURIComponent(smiles) + "\">" + smiles + "</a> &nbsp;&nbsp;at <a target=_blank href=https://www.ebi.ac.uk/chembl/api/data>ChEMBL</a>";
+}
+
+// show the SMILES, InChI, and InChIKey
+        
+function showSmiles(from3d) {
+ setTimeout(function() {
+  var smiles = Jmol.evaluateVar(jmol, "{visible}.find('SMILES/noaromatic')")
+  $("#jsmolsmiles").html(ebiMatch(smiles));
+  var inchi = Jmol.evaluateVar(jmol, "show('chemical stdinchi')").trim();
+  xxxi = inchi  
+  $("#jsmolinchi").html(google(inchi.split("=")[1]));
+  var inchikey = Jmol.evaluateVar(jmol, "show('chemical stdinchikey')").trim();
+  $("#jsmolinchikey").html(google(inchikey.split("=")[1]));
+
+ });
+  //$("#jsmesmiles").html(jme._getSmiles());
+}
+
+function applyToAll(jmolcommand) {
+  return "a={selected};select all;"+jmolcommand+";select a;";
+}
+
+var selected=[];
+var editAtoms=0;
+function constrain(nAtoms){
+  Jmol.script(jmol,'set picking IDENT;set PickCallBack "editor";');
+  editAtoms=nAtoms;
+  return;
+}
+function editor(app,callback){
+  selected.push(callback.split(' ')[0]);
+  if(selected.length == editAtoms){
+    alert("Editing: " + selected + " "+ selected.length + " "+ editAtoms);
+    selected=[];
+    Jmol.script(jmol,'set PickCallBack "none";');
+  }
+}
+  
+
+function voidTable(){
+		  var kineticDiameters = [ ["helium",2.6],
+					  ["hydrogen",2.89],
+					  ["carbon dioxide",3.30],
+					  ["argon",3.40],
+					  ["oxygen",3.46],
+					  ["nitrogen",3.64],
+					  ["carbon monoxide",3.76],
+					  ["methane",3.80],
+					  ["ethylene",3.90],
+					  ["propane",4.3],
+					  ["n-butane",4.3],
+					  ["propene",4.5],
+					  ["i-butane",5.0]];
+		  var x = "";
+		  for (i = 0; i < kineticDiameters.length; i++) {
+			  x += "<tr><td>" + kineticDiameters[i][0] + "</td><td>" + kineticDiameters[i][1].toFixed(2) + "</td><td>" + Jmol.jmolLink(jmol,'boundbox on; hide all; isosurface cavity ' + kineticDiameters[i][1]/2,'plot') + "</td></tr>";
+		  }
+		  $("#gasVoidTable").append(x);
+}
+	
+$(document).ready(function() {
+  $( "#specialTabs" ).tabs();
+  $( "#accordion" ).accordion();
+  $( "#tabs" ).tabs({active:1});
+  setTimeout(function(){ $("#startTab" ).click()}, 2000);
+  $(document).tooltip();
+  voidTable();
+} );
+
+
+</script>
+
+<style type="text/css">
+/* These are important, don't change: */
+html, body { height:100%; overflow:hidden; margin:0; padding:0; }
+.JmolPanels { position:absolute; overflow:hidden; }
+.textPanels { position:absolute; overflow:auto; }
+/* Don't add margin nor padding to textPane; if needed, use an inner div with desired style (like 'contents' below) */
+
+/* These are aesthetic, can be customized: */
+.content { padding:0.5em 1ex; }
+.textPanels { background-color:#CCFFCC; }
+.JmolPanels { background-color:#CCFFCC; }  /* later, same applied to Jmol object */
+#headerPane { text-align:center; } 
+</style>
+<script type="text/javascript">
+//  	USER'S SETTINGS: 
+	var side = "left"	// you can set this to either 'left' or 'right' -- position of the Jmol panel
+	var w = 70			// you can set this to any integer, meaning percent of window width assigned to Jmol panel
+	var h = 90			// you can set this to any integer, meaning percent of window height assigned to Jmol panel
+	var JmolPath = "./"	// adjust according to your location of the JSmol library
+//      --------------
+
+var cssTx = '<style type="text/css">';
+cssTx += '#JmolPane { ' + ( side=="left" ? "left:0;" : "right:0;" ) + ' width:' + w + '%; top:' + (100-h) + '%; height:' + h + '%;} ';
+cssTx += '#mainPane { ' + ( side=="left" ? "right:0;" : "left:0;" ) + ' width:' + (100-w) + '%; top:' + (100-h) + '%; height:' + h + '%;} ';
+cssTx += '#headerPane { width:100%; top:0; height:' + (100-h) + '%;} ';
+cssTx += '</style>';
+document.writeln(cssTx);
+</script>
+</head>
+
+<body>
+<div id="headerPane" class="textPanels">
+	<h1>Studying a molecule in 3D</h1>
+</div> <!--headerPane-->
+
+<div id="JmolPane" class="JmolPanels">
+<script type="text/javascript"> 
+	Jmol.getApplet("jmol", JmolInfo);
+	Jmol.script(jmol, 'load $aspirin');
+		// of course, you should change the script to load your model or run your script
+</script>
+</div>
+<div id="mainPane" class="textPanels">
+	<div class="content">
+		<p>Here goes your body text</p>
+		<script type="text/javascript">
+		Jmol.jmolButton(myJmol, 'wireframe only', 'wireframe');
+		</script>
+	</div> <!--content-->
+</div> <!--mainPane-->
+
+
+</body>
+</html>

@@ -35,8 +35,8 @@ var jme = "jme";
 // set up Jmol
 
 var JmolInfo = {
-	width: '700',
-	height: '700',
+	width: '100%',
+	height: '100%',
 	debug: false,
 	color: "white",
 	use: "HTML5",
@@ -201,12 +201,26 @@ $(document).ready(function() {
 </head>
 
 <style>
-#jsmolWrapper{float:left;display:inline;}
-#accordion{float:left;width:300px;}
+html,body,#tabs{height:100%;overflow:hidden;margin:0;padding:0;}
+#menu,#sidebar{position: absolute; overflow: auto;}
+.content{position: absolute; overflow:hidden;padding:0;margin:0;background:green;}
 #accordion div a{padding:2px;}
 #accordion div a:hover{background-color:#ddd;}
 #accordion div a:focus{background-color:lightblue;}
+/*.ui-accordion .ui-accordion-header, .ui-accordion .ui-accordion-content {padding:0;margin:0;}*/
 </style>
+
+<script>
+var side = "left";
+var w = 70;
+var h = 90;
+var cssTx = '<style type="text/css">';
+cssTx += '.content { ' + ( side=="left" ? "left:0;" : "right:0;" ) + ' width:' + w + '%; top:' + (100-h) + '%; height:' + h + '%;} ';
+cssTx += '#sidebar { ' + ( side=="left" ? "right:0;" : "left:0;" ) + ' width:' + (100-w-3) + '%; top:' + (100-h) + '%; height:' + h + '%;} ';
+cssTx += '#menu { width:100%; top:0; height:' + (100-h) + '%;} ';
+cssTx += '</style>';
+document.writeln(cssTx);
+</script>
 
 <body>
 
@@ -217,23 +231,45 @@ $(document).ready(function() {
     <li><a href="#3D" id="startTab">3D</a></li>
     <li><a href="#about">about</a></li>
   </ul>
-  <div id="1D">
+  <div id="1D" class="content">
   <a target=_blank href=http://opensmiles.org/>SMILES</a>: <span id="jsmolsmiles"></span>
   <input type="button" onclick="load1D()" value="Enter SMILES or name" />
   </div>
-  <div id="2D">
+  <div id="2D" class="content">
     <div id="jmediv" style="position:relative;width:400px;height:300px;"></div>
     <input type="button" onclick="to3D()" value="2D &#8594 3D" />
     <input type="button" onclick="to2D()" value="3D &#8594 2D" />
   </div>
-  <div id="3D">
-    <div id="jsmolWrapper">
+  <div id="3D" class="content">
     <script>
       jmol = Jmol.getApplet(jmol, JmolInfo)
       jme = Jmol.getJMEApplet(jme, JMEInfo, jmol);
     </script>
-    </div>
     
+    
+
+
+
+  </div><!--end #3D-->
+  <div id="about">
+  Powered by JSMol (<a href="https://chemapps.stolaf.edu/jmol/docs/">see documentation</a> for hundreds of other text-based commands). Inspired by other HTML5 implementations of JSMol: <a href="https://chemapps.stolaf.edu/jmol/jsmol/hackamol.htm">Hack-a-Mol</a>, <a href="http://biomodel.uah.es/Jmol/resizable/inicio.htm">resizable JSMol</a>, <a href="http://molview.org">molview</a>, and <a href="https://arrows.emsl.pnnl.gov/api/">EMSL Arrows</a>. Many thanks go to Bob Hansen and Angel Herraez for developing JMol/JSMol and answering countless user questions. 
+  
+  <h3>Potential future features:</h3>
+  <ul>
+    <li>Return xtb output and optimized structure</li>
+    <li>Return NWChem input file for geometry optimization, frequency calculation, single-point calculation, constrainedOpt/TS</li>
+	  <li><a href="https://sourceforge.net/p/jmol/mailman/message/34611560/">comicbook style: set celShading True; set celShadingPower 10;</a></li>
+	  <li>automated SambvCa</li>
+  </ul>
+	  
+	  <h3>Contact</h3>
+	  To provide feedback or request features, contact siboster [Åτ] g/mail [⋅] com
+  </div> <!--end #about -->
+
+
+
+
+<div id="sidebar">
 <div id="accordion">
   <h3>Import/Export</h3>
   <div>
@@ -362,64 +398,22 @@ calculate aromatic;`
     </ul>
 	<div id="gasVoid">
 	  <h4>Plot Void Space of Polymers</h4>
-	  <div> See <a href="https://doi.org/10.1021/acsmacrolett.0c00555">published example</a>. See source for kinetic diameters of various gas probe molecules: <a href="https://books.google.com/books?hl=en&lr=&id=bUV5DAAAQBAJ&oi=fnd&pg=PP1&ots=U5gETzUwoD&sig=iQoQzX9Jc9C-3Rc9CYH0TfgazcU#v=onepage&q=butane&f=false">link</a>
+	  See <a href="https://doi.org/10.1021/acsmacrolett.0c00555">published example</a>. See source for kinetic diameters of various gas probe molecules: <a href="https://books.google.com/books?hl=en&lr=&id=bUV5DAAAQBAJ&oi=fnd&pg=PP1&ots=U5gETzUwoD&sig=iQoQzX9Jc9C-3Rc9CYH0TfgazcU#v=onepage&q=butane&f=false">link</a>
 		  <table id="gasVoidTable">
 			  <tr><th>gas</th><th>kinetic diameter</th><th>Void Space</th></tr>
 		  </table>
-	  </div>
-	  </div>
-  </div><!--end specialTabs div-->
-</div> <!--end tabs div-->
-
-
-
-<div id="lowerPanel" style="clear:both;float:left;">
-<script>
-  Jmol.jmolButton(jmol,"console");
-  Jmol.jmolCommandInput(jmol);
-</script>
-</div>
-
-
-  </div>
-  <div id="about">
-  Powered by JSMol (<a href="https://chemapps.stolaf.edu/jmol/docs/">see documentation</a> for hundreds of other text-based commands). Inspired by other HTML5 implementations of JSMol: <a href="https://chemapps.stolaf.edu/jmol/jsmol/hackamol.htm">Hack-a-Mol</a>, <a href="http://biomodel.uah.es/Jmol/resizable/inicio.htm">resizable JSMol</a>, <a href="http://molview.org">molview</a>, and <a href="https://arrows.emsl.pnnl.gov/api/">EMSL Arrows</a>. Many thanks go to Bob Hansen and Angel Herraez for developing JMol/JSMol and answering countless user questions. 
-  
-  <h3>Potential future features:</h3>
-  <ul>
-    <li>Return xtb output and optimized structure</li>
-    <li>Return NWChem input file for geometry optimization, frequency calculation, single-point calculation, constrainedOpt/TS</li>
-	  <li><a href="https://sourceforge.net/p/jmol/mailman/message/34611560/">comicbook style: set celShading True; set celShadingPower 10;</a></li>
-	  <li>automated SambvCa</li>
-  </ul>
 	  
-	  <h3>Contact</h3>
-	  To provide feedback or request features, contact siboster [Åτ] g/mail [⋅] com
-  </div>
-</div>
- 
-<!--
+	 </div><!--end gasVoid div-->
+  </div><!--end specialTabs div-->
+</div> <!--end accordion div-->
 
-  <div id="left" style="float:left;text-align:center">
-    <div id="jmediv" style="position:relative;width:400px;height:300px;"></div>
-    <input type="button" onclick="to3D()" value="2D &#8594 3D" />
-  </div>
-  <div id="wrapper" style="float:left;">
-  <script>
-    jmol = Jmol.getApplet(jmol, JmolInfo)
-    jme = Jmol.getJMEApplet(jme, JMEInfo, jmol);
-  </script>
-  </div>
-  <div id="io">
-    load nci; load pubchem; load file; save xyz; save pdb; save image; save animations
-  </div>
-  <div id="view">
-    background colors; wireframe, ball&stick, spacefill
-  </div>
-  <div id="editor">undo; redo; calc aromatics; minimize; measure/edit; sculpt (drag+minimize); add CHNOPSFClBrIX; delete atom; delete bond</div>
-  <div id="specialized">plot void space of membrane</div>
- <div id="smiles" style="clear:left;"><a target=_blank href=http://opensmiles.org/>1D (SMILES)</a>: <span id="jsmolsmiles"></span></div>
--->
+</div> <!--end sidebar div-->
+
+
+
+</div><!--end #tabs-->
+ 
+
 
 </body>
 </html>
