@@ -36,7 +36,7 @@ var jme = "jme";
 
 var JmolInfo = {
 	width: '100%',
-	height: '100%',
+	height: '90%',
 	debug: false,
 	color: "white",
 	use: "HTML5",
@@ -115,6 +115,10 @@ function load1D() {
 	molname = x; 
 	Jmol.script(jmol,"load $" + molname);
 	$("#startTab").click();
+}
+
+function focus3D() {
+ $("#startTab").click();
 }
 
 // links for SMILES, InChI, and InChIKey
@@ -208,15 +212,19 @@ html,body,#tabs{height:100%;overflow:hidden;margin:0;padding:0;}
 #accordion div a:hover{background-color:#ddd;}
 #accordion div a:focus{background-color:lightblue;}
 /*.ui-accordion .ui-accordion-header, .ui-accordion .ui-accordion-content {padding:0;margin:0;}*/
+/*.ui-tabs .ui-tabs-panel {
+  padding:0;
+ }*/
+ .ui-tabs, .ui-tabs .ui-tabs-nav {padding:0;}
 </style>
 
 <script>
 var side = "left";
 var w = 70;
-var h = 90;
+var h = 93;
 var cssTx = '<style type="text/css">';
 cssTx += '.content { ' + ( side=="left" ? "left:0;" : "right:0;" ) + ' width:' + w + '%; top:' + (100-h) + '%; height:' + h + '%;} ';
-cssTx += '#sidebar { ' + ( side=="left" ? "right:0;" : "left:0;" ) + ' width:' + (100-w-3) + '%; top:' + (100-h) + '%; height:' + h + '%;} ';
+cssTx += '#sidebar { ' + ( side=="left" ? "right:0;" : "left:0;" ) + ' width:' + (100-w) + '%; top:' + (100-h) + '%; height:' + h + '%;} ';
 cssTx += '#menu { width:100%; top:0; height:' + (100-h) + '%;} ';
 cssTx += '</style>';
 document.writeln(cssTx);
@@ -240,18 +248,15 @@ document.writeln(cssTx);
     <input type="button" onclick="to3D()" value="2D &#8594 3D" />
     <input type="button" onclick="to2D()" value="3D &#8594 2D" />
   </div>
-  <div id="3D" class="content">
+  <div id="3D" class="content" style="padding:0;">
     <script>
-      jmol = Jmol.getApplet(jmol, JmolInfo)
+      jmol = Jmol.getApplet(jmol, JmolInfo);
       jme = Jmol.getJMEApplet(jme, JMEInfo, jmol);
+      Jmol.jmolButton(jmol,"console");
+      Jmol.jmolCommandInput(jmol);
     </script>
-    
-    
-
-
-
   </div><!--end #3D-->
-  <div id="about">
+  <div id="about" class="content" style="padding:0 0 0 1em;">
   Powered by JSMol (<a href="https://chemapps.stolaf.edu/jmol/docs/">see documentation</a> for hundreds of other text-based commands). Inspired by other HTML5 implementations of JSMol: <a href="https://chemapps.stolaf.edu/jmol/jsmol/hackamol.htm">Hack-a-Mol</a>, <a href="http://biomodel.uah.es/Jmol/resizable/inicio.htm">resizable JSMol</a>, <a href="http://molview.org">molview</a>, and <a href="https://arrows.emsl.pnnl.gov/api/">EMSL Arrows</a>. Many thanks go to Bob Hansen and Angel Herraez for developing JMol/JSMol and answering countless user questions. 
   
   <h3>Potential future features:</h3>
@@ -269,7 +274,7 @@ document.writeln(cssTx);
 
 
 
-<div id="sidebar">
+<div id="sidebar" onclick="focus3D()">
 <div id="accordion">
   <h3>Import/Export</h3>
   <div>
@@ -310,6 +315,9 @@ document.writeln(cssTx);
       Jmol.jmolLink(jmol,"color {all} cpk", "element");
       Jmol.jmolLink(jmol,"color {all} molecule", "molecule");
       Jmol.jmolLink(jmol,"select all;mydata={all}.atomIndex.all;data 'property_1 @mydata';propertyColorScheme='rainbow';color atoms property_1;select none;", "&#127752;","","rainbow");
+      Jmol.jmolHtml("<br /><b>cell shading:</b>");
+      Jmol.jmolLink(jmol,"set celShading true;set celShadingPower 10;", "ON");
+      Jmol.jmolLink(jmol,"set celShading false;", "OFF");
      </script>
   </div>
   <h3>Build</h3>
@@ -391,7 +399,7 @@ calculate aromatic;`
   </div>
   <h3>Special</h3>
   <div id="specialTabs">
-     <ul id="menu">
+     <ul class="menu">
        <li><a href="#gasVoid">gasVoid</a></li>
        <li><a href="#holder2" onclick="">2D</a></li>
        <li><a href="#holder3" id="startTab">3D</a></li>
