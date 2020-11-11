@@ -420,8 +420,9 @@
 						Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignAtom_Cl", "Cl")
 						Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignAtom_??", "X")
 						</script>
-					</div>Bond (click = change, or click+drag = add): 
+					</div><br />Bond (click = change, or click+drag = add):
 					<script>
+                     Jmol.jmolLink(jmol,"set picking DELETE BOND", "X","","delete bond")
 					 Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignBond_HBOND", "--","","hydrogen bond")
 					 Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignBond_SINGLE", "–","","single bond")
 					 Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignBond_PARTIALDOUBLE", "≃","","partial double bond")
