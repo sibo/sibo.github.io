@@ -160,6 +160,7 @@
 	var editAtoms=0;
 	function constrain(nAtoms){
         alert("constraining: " + nAtoms);
+        selected=[];
 	 Jmol.script(jmol,'set picking IDENT;set PickCallBack "editor";');
 	 editAtoms=nAtoms;
 	 return;
@@ -167,9 +168,10 @@
 	function editor(app,callback){
 	 selected.push(callback.split(' ')[0]);
 	 if(selected.length == editAtoms){
-	   alert("Editing: " + selected + " "+ selected.length + " "+ editAtoms);
+	   alert("Editing: " + selected);
        b = Jmol.evaluateVar(jmol,"measure({"+selected.join('} {')+"});");
-       a = "minimize constraint {" + selected.join('} {') + "} " + b[0].split(/[ ]+/)[1];
+       b = prompt("Enter a contraint value",b[0].split(/[ ]+/)[1]);
+       a = "minimize constraint {" + selected.join('} {') + "} " + b.split(/[ ]+/)[0];
        alert(a);
        Jmol.script(jmol,a);
 	   selected=[];
