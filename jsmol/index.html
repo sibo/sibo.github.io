@@ -68,12 +68,12 @@
 	  // to2D();
 	  //}
 	  //showSmiles(true);
-	  if (filename.split('.').pop()=='xyz'){
-	    x = confirm("Calculate aromatic bonds for .xyz file?");
-	    if (x==True) {
-	      Jmol.script(jmol,fixPhenyls);
-	    }
-	  }
+	  //if (filename.split('.').pop()=='xyz'){
+	  //  x = confirm("Calculate aromatic bonds for .xyz file?");
+	  //  if (x==True) {
+	  //    Jmol.script(jmol,fixPhenyls);
+	  //  }
+	  //}
 	}
 
 	// specify drop-down options for [search]
@@ -171,14 +171,91 @@
 	   alert("Editing: " + selected);
        b = Jmol.evaluateVar(jmol,"measure({"+selected.join('} {')+"});");
        b = prompt("Enter a contraint value",b[0].split(/[ ]+/)[1]);
-       a = "minimize constraint {" + selected.join('} {') + "} " + b.split(/[ ]+/)[0];
-       alert(a);
-       Jmol.script(jmol,a);
+       cmd = "minimize constraint {" + selected.join('} {') + "} " + b;
+       c=selected.join(',')+"," + b;
+       alert(c);
+       editMolecule(c);
+       alert(cmd);
+       Jmol.script(jmol,cmd);
 	   selected=[];
 	   Jmol.script(jmol,'set PickCallBack "none";');
 	 }
 	}
-	 
+    
+    
+    function editMolecule(input) {
+        input = input.split(',');
+        alert("editMolecules: " + input);
+        var x = input.slice(-1)[0];
+        if (input.length == 3) { //edit bond
+            a = input[0];
+            b = input[1];
+            alert("setting " + a + "-" + b + " distance to " + x + " Ang");
+                var s1 = `
+    connect {${a}} {${b}} delete
+    frag = {${b}}.molecule`;
+            var s2 = `
+    v={${b}}.xyz - {${a}}.xyz
+    w=v/v * ${x} - v
+    translateSelected @w {molecule=@frag}`;
+            Jmol.script(jmol,s1);
+            aFrag = Jmol.evaluateVar(jmol,"script('print {" + a + "}.molecule')");
+            bFrag = Jmol.evaluateVar(jmol,"script('print {" + b + "}.molecule')");
+            if (aFrag == bFrag) {
+                alert("Cannot set dependent distance");
+            } else {
+                alert(s2);
+                Jmol.script(jmol,s2);
+            }
+            Jmol.script(jmol,`connect {${a}} {${b}}`);
+        } else if (input.length == 4) { // edit angle
+            a = input[0];
+            b = input[1];
+            c = input[2];
+            theta = x - input[3].split(' ')[0];
+            Jmol.script(jmol,"connect {" + b + "} {" + c + "} delete;");
+            bFrag = Jmol.evaluateVar(jmol,"script('print {" + b + "}.molecule')");
+            cFrag = Jmol.evaluateVar(jmol,"script('print {" + c + "}.molecule')");
+            var s = `
+    draw plane1 {${a}}, {${b}}, {${c}}
+    draw line1 PERP $plane1
+    a={${b}}.x-$line1.x
+    b={${b}}.y-$line1.y
+    c={${b}}.z-$line1.z
+    draw line2 PERP $plane1 offset {@a @b @c}
+    select {molecule=${cFrag}}
+    rotateSelected $line2 ${theta}
+    draw off`;
+            if (cFrag == bFrag) {
+                alert("Cannot set dependent angle");
+            } else {
+                alert(s);
+                Jmol.script(jmol,s);
+            }
+            Jmol.script(jmol,`connect {${b}} {${c}}`);
+        } else { // edit dihedral
+            a = input[0];
+            b = input[1];
+            c = input[2];
+            d = input[3];
+            omega = x - input[4].split(' ')[0];
+            Jmol.script(jmol,"connect {" + b + "} {" + c + "} delete;");
+            bFrag = Jmol.evaluateVar(jmol,"script('print {" + b + "}.molecule')");
+            cFrag = Jmol.evaluateVar(jmol,"script('print {" + c + "}.molecule')");
+            if (cFrag == bFrag) {
+                alert("Cannot set dependent dihedral");
+            } else {
+                Jmol.script(jmol,"rotateSelected {" + b + "} {" + c + "} " + omega + "{molecule=" + cFrag + "};");
+            }
+            Jmol.script(jmol,`connect {${b}} {${c}}`);
+        }
+        s = "";
+        for (i = 0 ; i < input.length - 1 ; i++) {
+            s += "{" + input[i].split(' ')[0] + "} ";
+        }
+        //alert("measure " + s);
+        //Jmol.script(jmol,"measure " + s);
+    }
 
 	function voidTable(){
 	         var kineticDiameters = [ ["helium",2.6],
@@ -208,17 +285,7 @@
 	 setTimeout(function(){ $("#startTab" ).click()}, 2000);
 	 $(document).tooltip();
 	 voidTable();
-     //writeConstrain();
 	} );
-
-    function writeConstrain() {
-                     text ="";
-                     text += Jmol.jmolLink(jmol,constrain(2),"–","","bond");
-                     text += Jmol.jmolLink(jmol,constrain(3),"&#8736;","","angle");
-                     text += Jmol.jmolLink(jmol,constrain(4),"&#8847;","","dihedral");
-                     text += Jmol.jmolLink(jmol,"minimize constraint clear;","clear","","clear all constraints");
-                     $("#constrain").html(text)
-    }
                                                                                                                                             
 	</script>
 	<style>
