@@ -54,7 +54,7 @@
 	 j2sPath: "j2s",
 	   isSigned: true,
 	 defaultModel: "$caffeine",
-	   script: "frank off;select none;selectionHalos on;",
+	   script: "frank off;select none;selectionHalos on;set measurementUnits angstroms;set antialiasdisplay;",
 	}
 
 	// called from JSmol when a model is loaded or cleared
@@ -161,11 +161,48 @@
 	function constrain(nAtoms){
         alert("constraining: " + nAtoms);
         selected=[];
-	 Jmol.script(jmol,'set picking IDENT;set PickCallBack "editor";');
+        // Jmol.script(jmol,'set picking IDENT;set PickCallBack "editor";');
+        var type = "";
+        if (nAtoms == 2) {
+          type = "";
+        } else if (nAtoms == 3){
+            type = "angle";
+        } else {
+            type = "torsion";
+        }
+        Jmol.script(jmol,'select none;set picking measure ' + type + ';set MeasureCallBack "editor";');
 	 editAtoms=nAtoms;
 	 return;
 	}
-	function editor(app,callback){
+    function editor(app,callback){
+        nAtoms = callback.split(',').length - 1;
+     if (nAtoms != editAtoms) {
+         return;
+     }
+     if(nAtoms == editAtoms){
+         input = (" " + callback.substring(1,callback.length-1)).split(',');
+         atoms = input.slice(0,-1);
+         oldVal = input.slice(-1)[0].split(' ')[1];
+         for (i = 0; i < atoms.length; i++) {
+             atoms[i] = atoms[i].split(' ')[1];
+         }
+         alert("Editing: " + input );
+       
+       newVal = prompt("Enter a contraint value",oldVal);
+       if (newVal == null) {
+           return;
+       }
+       cmd = "minimize constraint {" + atoms.join('} {') + "} " + newVal;
+       c=atoms.join(',')+"," + newVal;
+       //alert(c);
+       editMolecule(c);
+       //alert(cmd);
+       Jmol.script(jmol,cmd);
+       selected=[];
+       Jmol.script(jmol,'set MeasureCallBack "none";set picking select atom;');
+     }
+    }
+	function editorIdent(app,callback){
 	 selected.push(callback.split(' ')[0]);
 	 if(selected.length == editAtoms){
 	   alert("Editing: " + selected);
@@ -365,9 +402,9 @@
 					<script>
 					 Jmol.jmolButton(jmol,"load ? ","Load FILE")
 					 Jmol.jmolButton(jmol,"if (!molname) { molname = 'tylenol'};var x = prompt('Enter the name or identifier (SMILES, InChI, CAS) of a molecule',molname);if (!x) { quit }; molname = x; load @{'$' + molname} #alt:LOAD $??Enter a model name","Load from NCI")
-					 Jmol.jmolButton(jmol,"write COORD ?.xyz","save XYZ")
-					 Jmol.jmolButton(jmol,"write COORD ?.mol","MOL")
-					 Jmol.jmolButton(jmol,"write COORD ?.pdb","PDB")
+					 Jmol.jmolButton(jmol,"select visible; write COORD ?.xyz","save XYZ")
+					 Jmol.jmolButton(jmol,"select visible; write COORD ?.mol","MOL")
+					 Jmol.jmolButton(jmol,"select visible; write COORD ?.pdb","PDB")
 					 Jmol.jmolButton(jmol,"write ","export PNG")
 					 Jmol.jmolButton(jmol,"capture 'spin.gif' SPIN y","spin (aGIF)")
 					 Jmol.jmolButton(jmol,"capture 'rock.gif' ROCK","rock (aGIF)")
@@ -434,7 +471,7 @@
 				</div>
 				<h3>Sculpt</h3>
 				<div>
-					duplicate selected?<br>
+					duplicate selected?<br>invert about atom?<br />
 					<script>
 					 Jmol.jmolLink(jmol,"load", "&#x27F2;","reload","reload")
 					 Jmol.jmolLink(jmol,"undomove", "&#x21A9;","undo","undoMove")
