@@ -162,9 +162,10 @@ a {
 .title {
   /*position: fixed;
   top: 0;
-  right: 0;*/
-float:right;
-  height: 100px;
+  right: 0;
+  height: 100px;*/
+  position: relative;
+  height: auto;
   width: 70%;
   z-index: 995;
   -o-box-sizing: border-box;
