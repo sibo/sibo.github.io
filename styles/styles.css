@@ -163,6 +163,7 @@ a {
   /*position: fixed;
   top: 0;
   right: 0;*/
+float:right;
   height: 100px;
   width: 70%;
   z-index: 995;
