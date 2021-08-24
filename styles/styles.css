@@ -176,11 +176,11 @@ a {
   box-sizing: border-box;
   padding: 10px 0 0 6%;
   /*background: #323232;/*originally white*/
-  /*text-align: center;*/
+  text-align: center;
 }
 
 .title ol {
-	font-color:white;
+	color:white;
 }
 
 /*#grid {background:#323232;} /*originally not defined*/
@@ -372,7 +372,7 @@ div:target{
 #grid {
   width: 70%;
   margin: 100px 0 100px 30%;
-  padding: 20px 2%;
+  padding: 5em 2% 20px;
   -o-box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
