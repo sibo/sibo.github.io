@@ -631,7 +631,7 @@ label {
   }
 
   /* Grid */
-  #grid {
+  #grid, ol {
     margin: -15% auto 0; /*originally "0 auto"
     width: 95%;
   }
