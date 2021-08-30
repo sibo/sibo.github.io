@@ -183,6 +183,8 @@ a {
 	color:white;
 }
 .title ol a {padding:0 1em; background-color: white;}
+.title ol li{text-align:left;margin-bottom:1em;}
+
 
 /*#grid {background:#323232;} /*originally not defined*/
 
