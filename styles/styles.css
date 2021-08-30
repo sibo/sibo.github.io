@@ -633,7 +633,7 @@ label {
 
   /* Grid */
   #grid, ol {
-    margin: 0 auto 0; /*originally "0 auto"
+    margin: 0 auto;
     width: 95%;
   }
 }
