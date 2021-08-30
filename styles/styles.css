@@ -381,7 +381,7 @@ div:target{
   overflow: hidden;
 }
 
-#grid {transform: rotate(180deg);margin-top:-5%;}
+#grid {transform: rotate(180deg);margin-top:0%;}
 #grid .hexagon img {transform: rotate(180deg);}
 
 
@@ -632,7 +632,7 @@ label {
 
   /* Grid */
   #grid, ol {
-    margin: -15% auto 0; /*originally "0 auto"
+    margin: 0 auto 0; /*originally "0 auto"
     width: 95%;
   }
 }
