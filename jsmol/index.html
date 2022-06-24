@@ -459,7 +459,7 @@
 						</script>
 					</div><br />Bond (click = change, or click+drag = add):
 					<script>
-                     Jmol.jmolLink(jmol,"set picking DELETE BOND", "X","","delete bond")
+                     			 Jmol.jmolLink(jmol,"set picking DELETE BOND", "X","","delete bond")
 					 Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignBond_HBOND", "--","","hydrogen bond")
 					 Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignBond_SINGLE", "–","","single bond")
 					 Jmol.jmolLink(jmol,"set modelkitmode=True; set picking assignBond_PARTIALDOUBLE", "≃","","partial double bond")
@@ -526,7 +526,7 @@
 							<a href="#gasVoid">gasVoid</a>
 						</li>
 						<li>
-							<a href="#holder2" onclick="">2D</a>
+							<a href="#desilication" onclick="">desilication</a>
 						</li>
 						<li>
 							<a href="#holder3" id="startTab">3D</a>
@@ -542,6 +542,14 @@
 							</tr>
 						</table>
 					</div><!--end gasVoid div-->
+					<div id="desilication">
+						<h4>Desilication of beta zeolite to form mesopores</h4>See Ke Zhang's publications for example material.
+						<script>
+							Jmol.jmolLink(jmol,"load 'BEA.cif' packed supercell '6a,6b,3c';", "load 6 6 3 supercell")
+							Jmol.jmolLink(jmol,"define Si_intact _Si and connected(4); define O_intact _O and connected(2);define core within(40, hkl, {1 0 0}) and not within(35, hkl, {1 0 0}) and within(-42.5, hkl, {0 0 1}) and not within(-37.5, hkl, {0 0 1}); delete within(12,core); delete (_Si and connected(3) or connected(2) or connected(1)) and Si_intact; delete (_O and connected(0)) and O_intact; calculate hydrogens (_O and connected(1)) and O_intact;", "cut out ~25 Ang channel")
+							Jmol.jmolLink(jmol,"load 'BEA.cif' packed supercell '6a,6b,3c';", "load 6 6 3 supercell")
+						</script>
+					</div><!--end desilication div-->
 				</div><!--end specialTabs div-->
 			</div><!--end accordion div-->
 		</div><!--end sidebar div-->
