@@ -406,7 +406,7 @@
 					 Jmol.jmolButton(jmol,"select visible; write COORD ?.mol","MOL")
 					 Jmol.jmolButton(jmol,"select visible; write COORD ?.pdb","PDB")
 					 Jmol.jmolButton(jmol,"write ","export PNG")
-					 Jmol.jmolButton(jmol,"capture 'spin.gif' SPIN y","spin (aGIF)")
+					 Jmol.jmolButton(jmol,"set animationfps 30; capture 'spin.gif' SPIN y","spin (aGIF)")
 					 Jmol.jmolButton(jmol,"capture 'rock.gif' ROCK","rock (aGIF)")
 					</script>
 				</div>
@@ -423,6 +423,8 @@
 					 Jmol.jmolLink(jmol,"set backgroundcolor='white'", "white")
 					 Jmol.jmolLink(jmol,"set backgroundcolor='#aaaaaa'", "gray")
 					 Jmol.jmolLink(jmol,"set backgroundcolor='black'", "black")
+					 
+				
 					</script> 
 					<script>
 					      
@@ -439,6 +441,23 @@
 					 Jmol.jmolHtml("<br /><b>cell shading:<\/b>");
 					 Jmol.jmolLink(jmol,"set celShading true;set celShadingPower 10;", "ON");
 					 Jmol.jmolLink(jmol,"set celShading false;", "OFF");
+					 Jmol.jmolHtml("<br /><b>Fog:<\/b>");
+					 Jmol.jmolLink(jmol,"set zshade true; set zshadepower 3; slab on;", "HI");
+					Jmol.jmolLink(jmol,"set zshade true; set zshadepower 2; slab on;", "MED");
+					Jmol.jmolLink(jmol,"set zshade true; set zshadepower 1; slab on;", "LO");
+					 Jmol.jmolLink(jmol,"set zshade false; slab reset;", "OFF");
+					 Jmol.jmolHtml("<br /><b>Shadows:<\/b>");
+					 Jmol.jmolLink(jmol,"set ambientPercent 0", "Strong");	
+					 Jmol.jmolLink(jmol,"set ambientPercent 25", "Medium");
+					 Jmol.jmolLink(jmol,"set ambientPercent 50", "Weak");	
+				         Jmol.jmolHtml("<br /><b>Shine:<\/b>");
+					 Jmol.jmolLink(jmol,"set specularPower 100", "Strong");	
+					 Jmol.jmolLink(jmol,"set ambientPercent 50", "Default");
+					 Jmol.jmolLink(jmol,"set ambientPercent 10", "Weak");
+						Jmol.jmolHtml("<br />    ");
+					Jmol.jmolLink(jmol,"set specularExponent 7", "Tight");	
+					 Jmol.jmolLink(jmol,"set specularExponent 5", "Default");
+					 Jmol.jmolLink(jmol,"set specularExponent 3", "Broad");	
 					</script>
 				</div>
 				<h3>Build</h3>
